@@ -894,29 +894,10 @@ function copyIP(){
 }
 
 // ════════════════════════
-//  SUNUCU DURUMU
-//  mcsrvstat.us — CORS destekli, ücretsiz, GitHub Pages uyumlu
+//  SUNUCU DURUMU — Sabit gösterim
 // ════════════════════════
-async function fetchServerStatus(){
-  const url = `https://api.mcsrvstat.us/3/${SERVER_IP}`;
-  try {
-    const res  = await fetch(url);
-    const data = await res.json();
-    if(data && data.online){
-      const online = data.players?.online ?? 0;
-      const max    = data.players?.max ?? 100;
-      document.getElementById('playerText').textContent = `🟢 ${online} / ${max} oyuncu`;
-      document.getElementById('statOnline').textContent = online;
-    } else {
-      document.getElementById('playerText').textContent = '🔴 Sunucu şu an kapalı';
-      document.getElementById('statOnline').textContent = '0';
-    }
-  } catch {
-    document.getElementById('playerText').textContent = '🟡 Durum alınamadı';
-  }
-}
-fetchServerStatus();
-setInterval(fetchServerStatus, 30000);
+document.getElementById('playerText').textContent = '🟢 Sunucu Çevrimiçi';
+document.getElementById('statOnline').textContent = '✓';
 
 // ════════════════════════
 //  LOGİN
