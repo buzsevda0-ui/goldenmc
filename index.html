@@ -20,15 +20,11 @@ body{
   font-family:'Rajdhani',sans-serif;font-size:15px;
   min-height:100vh;overflow-x:hidden;
 }
-
-/* NOISE TEXTURE OVERLAY */
 body::after{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   opacity:0.4;
 }
-
-/* GRID PATTERN */
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
@@ -36,10 +32,8 @@ body::before{
     linear-gradient(90deg,rgba(255,215,0,0.025) 1px,transparent 1px);
   background-size:40px 40px;
 }
-
 .app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
 
-/* ═══════════════════════════════ NAV ═══════════════════════════════ */
 nav{
   display:flex;justify-content:space-between;align-items:center;
   padding:0.85rem 2rem;
@@ -66,7 +60,6 @@ nav{
 .nav-link:hover{color:var(--gold)}
 .nav-right{display:flex;gap:0.5rem;align-items:center}
 
-/* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;
   border:none;cursor:pointer;font-family:'Rajdhani',sans-serif;
   font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
@@ -85,7 +78,6 @@ nav{
 .btn-danger:hover{background:rgba(248,113,113,0.2)}
 .btn-full{width:100%}
 
-/* USER PILL */
 .user-pill{
   display:flex;align-items:center;gap:0.5rem;
   background:rgba(255,215,0,0.06);border:1px solid var(--border);
@@ -104,12 +96,10 @@ nav{
 .badge-admin{background:#5b21b6;color:#ddd6fe}
 .badge-mod{background:#065f46;color:#6ee7b7}
 
-/* ═══════════════════════════════ PAGES ═══════════════════════════════ */
 .page{display:none;flex:1;animation:fadeIn 0.25s ease}
 .page.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* ═══════════════════════════════ HERO ═══════════════════════════════ */
 .hero{
   text-align:center;padding:5rem 2rem 4rem;
   position:relative;overflow:hidden;
@@ -150,7 +140,6 @@ nav{
 .ip-copy{font-size:0.62rem;color:var(--muted);letter-spacing:2px;border-left:1px solid var(--border);padding-left:0.85rem}
 .hero-btns{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
 
-/* STATUS BAR */
 .status-bar{
   display:flex;justify-content:center;gap:0;
   margin:0 2rem 4rem;
@@ -177,7 +166,6 @@ nav{
 }
 @keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px var(--green)}50%{opacity:0.3;box-shadow:none}}
 
-/* ═══════════════════════════════ SECTION ═══════════════════════════════ */
 .sec{padding:3.5rem 2rem;max-width:1100px;margin:0 auto}
 .sec-title{
   font-family:'Cinzel',serif;font-weight:700;
@@ -192,7 +180,6 @@ nav{
   background:linear-gradient(90deg,transparent,var(--gold3),transparent);
 }
 
-/* ═══════════════════════════════ VIP CARDS ═══════════════════════════════ */
 .vip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
 .vc{
   background:rgba(255,215,0,0.03);border:1px solid var(--border);
@@ -239,7 +226,6 @@ nav{
 .vc-buy.blue{color:#7dd3fc;border-color:rgba(96,165,250,0.2)}
 .vc-buy.blue:hover{background:rgba(96,165,250,0.12)}
 
-/* ═══════════════════════════════ FEATURES ═══════════════════════════════ */
 .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
 .feat-card{
   background:rgba(255,255,255,0.015);border:1px solid rgba(255,215,0,0.07);
@@ -250,7 +236,6 @@ nav{
 .feat-title{font-family:'Cinzel',serif;font-size:0.88rem;color:var(--gold);margin-bottom:0.35rem}
 .feat-desc{font-size:0.78rem;color:var(--muted);line-height:1.55}
 
-/* RULES */
 .rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.75rem}
 .rule{
   display:flex;gap:1rem;
@@ -261,7 +246,6 @@ nav{
 .rule-title{color:var(--text);font-weight:700;margin-bottom:0.2rem;font-size:0.85rem}
 .rule-desc{font-size:0.75rem;color:var(--muted);line-height:1.45}
 
-/* JOIN STEPS */
 .steps{display:flex;flex-wrap:wrap;justify-content:center;gap:0}
 .step{flex:1;min-width:160px;max-width:210px;text-align:center;padding:1.5rem 1rem;position:relative}
 .step:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:48%;transform:translateY(-50%);color:var(--muted);font-size:1rem}
@@ -275,7 +259,6 @@ nav{
 .step-title{font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold);margin-bottom:0.35rem}
 .step-desc{font-size:0.75rem;color:var(--muted);line-height:1.45}
 
-/* ═══════════════════════════════ AUTH ═══════════════════════════════ */
 .auth-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:2rem}
 .auth-card{
   background:var(--dark3);border:1px solid var(--border2);
@@ -302,7 +285,6 @@ nav{
 .forgot{float:right;font-size:0.68rem;color:var(--muted);cursor:pointer;transition:color 0.2s}
 .forgot:hover{color:var(--gold)}
 
-/* ═══════════════════════════════ PROFILE ═══════════════════════════════ */
 .profile-wrap{max-width:520px;margin:0 auto;padding:2.5rem 1.5rem}
 .profile-card{
   background:var(--dark3);border:1px solid var(--border);
@@ -327,7 +309,6 @@ nav{
 .rb-kvip{background:rgba(96,165,250,0.12);color:#60a5fa;border:1px solid rgba(96,165,250,0.2)}
 .rb-gvip{background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.2)}
 
-/* ORDERS TABLE (profile) */
 .orders-mini{margin-top:1.5rem}
 .orders-mini-title{font-size:0.68rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:0.75rem}
 .order-row{
@@ -344,7 +325,6 @@ nav{
 .sp-red{background:rgba(248,113,113,0.1);color:#f87171}
 .sp-pay{background:rgba(96,165,250,0.12);color:#60a5fa}
 
-/* ═══════════════════════════════ ADMIN ═══════════════════════════════ */
 .admin-wrap{max-width:1050px;margin:0 auto;padding:2rem 1.5rem}
 .admin-head{
   display:flex;align-items:center;gap:1rem;
@@ -376,6 +356,7 @@ nav{
 .ab-no{background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.18)}
 .ab-pay{background:rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.18)}
 .ab-rank{background:rgba(255,215,0,0.08);color:var(--gold);border:1px solid var(--border)}
+.ab-rcon{background:rgba(167,139,250,0.1);color:#a78bfa;border:1px solid rgba(167,139,250,0.2)}
 .sel{background:rgba(0,0,0,0.5);border:1px solid var(--border);color:var(--text);padding:0.22rem 0.5rem;border-radius:2px;font-size:0.7rem;font-family:'Rajdhani',sans-serif;cursor:pointer;outline:none}
 .sel option{background:var(--dark)}
 .user-row-admin{
@@ -391,7 +372,18 @@ nav{
 .admin-tab{flex:1;padding:0.55rem;border:none;background:transparent;color:var(--muted);font-weight:700;font-size:0.72rem;cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:1px;transition:all 0.2s}
 .admin-tab.active{background:rgba(255,215,0,0.1);color:var(--gold)}
 
-/* ═══════════════════════════════ MODALS ═══════════════════════════════ */
+/* RCON STATUS */
+.rcon-status{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  font-size:0.62rem;letter-spacing:1px;color:var(--muted);
+  background:rgba(0,0,0,0.3);border:1px solid var(--border);
+  padding:0.2rem 0.6rem;border-radius:2px;margin-left:0.5rem;
+}
+.rcon-dot{width:6px;height:6px;border-radius:50%;background:#888}
+.rcon-dot.ok{background:var(--green);box-shadow:0 0 4px var(--green)}
+.rcon-dot.err{background:var(--red)}
+.rcon-dot.spin{background:#fbbf24;animation:blink 1s infinite}
+
 .modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(6px)}
 .modal-wrap.open{display:flex}
 .modal{background:var(--dark3);border:1px solid var(--border2);border-radius:8px;padding:1.75rem;width:100%;max-width:420px;max-height:92vh;overflow-y:auto;position:relative}
@@ -405,7 +397,6 @@ nav{
 .modal-total-v{font-family:'Cinzel',serif;font-weight:700;color:var(--gold);font-size:1.05rem}
 .pay-note{font-size:0.68rem;color:var(--muted);text-align:center;margin-top:0.65rem;line-height:1.5}
 
-/* BANK INFO BOX */
 .bank-box{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:5px;padding:1rem;margin-top:0.75rem}
 .bank-row{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid rgba(255,215,0,0.05);font-size:0.82rem}
 .bank-row:last-child{border-bottom:none}
@@ -416,11 +407,9 @@ nav{
 .paytr-coming{text-align:center;padding:1.5rem;color:var(--muted);font-size:0.82rem;line-height:1.6}
 .paytr-coming strong{color:var(--gold);display:block;margin-bottom:0.5rem;font-family:'Cinzel',serif}
 
-/* ═══════════════════════════════ FOOTER ═══════════════════════════════ */
 footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--muted);font-size:0.75rem;margin-top:auto}
 .foot-logo{font-family:'Cinzel',serif;font-weight:900;font-size:1.1rem;background:linear-gradient(135deg,#FFD700,#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.4rem;letter-spacing:3px}
 
-/* TOAST */
 .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark4);border:1px solid var(--border2);color:var(--gold);padding:0.6rem 1.4rem;border-radius:4px;font-weight:700;font-size:0.78rem;letter-spacing:1px;z-index:9999;transition:transform 0.3s;white-space:nowrap;max-width:90vw;text-align:center;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.ok{border-color:rgba(74,222,128,0.35);color:#4ade80}
@@ -442,7 +431,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
 <body>
 <div class="app" id="app">
 
-<!-- ═══════════════════ NAV ═══════════════════ -->
+<!-- NAV -->
 <nav>
   <div class="nav-logo" onclick="showPage('home')">⚔ GOLDENMCEE</div>
   <div class="nav-links">
@@ -457,7 +446,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </nav>
 
-<!-- ═══════════════════ HOME ═══════════════════ -->
+<!-- HOME -->
 <div class="page active" id="page-home">
   <header class="hero">
     <div class="hero-glow"></div>
@@ -498,7 +487,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- ═══════════════════ MARKET ═══════════════════ -->
+<!-- MARKET -->
 <div class="page" id="page-market">
   <div class="sec">
     <h2 class="sec-title">VIP Market</h2>
@@ -515,7 +504,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- ═══════════════════ FEATURES ═══════════════════ -->
+<!-- FEATURES -->
 <div class="page" id="page-features">
   <div class="sec">
     <h2 class="sec-title">Sunucu Özellikleri</h2>
@@ -544,7 +533,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- ═══════════════════ JOIN ═══════════════════ -->
+<!-- JOIN -->
 <div class="page" id="page-join">
   <div class="sec">
     <h2 class="sec-title">Nasıl Katılırsın?</h2>
@@ -559,7 +548,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- ═══════════════════ LOGIN ═══════════════════ -->
+<!-- LOGIN -->
 <div class="page" id="page-login">
   <div class="auth-wrap">
     <div class="auth-card">
@@ -580,7 +569,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- ═══════════════════ REGISTER ═══════════════════ -->
+<!-- REGISTER -->
 <div class="page" id="page-register">
   <div class="auth-wrap">
     <div class="auth-card">
@@ -609,7 +598,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- ═══════════════════ PROFILE ═══════════════════ -->
+<!-- PROFILE -->
 <div class="page" id="page-profile">
   <div class="profile-wrap">
     <h2 class="sec-title">Hesabım</h2>
@@ -631,13 +620,18 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- ═══════════════════ ADMIN PANEL ═══════════════════ -->
+<!-- ADMIN PANEL -->
 <div class="page" id="page-admin">
   <div class="admin-wrap">
     <div class="admin-head">
       <div class="admin-icon-wrap ai-admin">👑</div>
       <div>
-        <div class="admin-title">Admin Paneli</div>
+        <div class="admin-title">Admin Paneli
+          <span class="rcon-status" id="rconStatus">
+            <span class="rcon-dot" id="rconDot"></span>
+            <span id="rconLabel">RCON Bağlantısı Yok</span>
+          </span>
+        </div>
         <div class="admin-sub" id="adminWelcome">Yükleniyor...</div>
       </div>
     </div>
@@ -651,6 +645,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
     <div class="admin-tabs">
       <button class="admin-tab active" onclick="adminTab('orders',this)">📦 Siparişler</button>
       <button class="admin-tab" onclick="adminTab('users',this)">👥 Kullanıcılar</button>
+      <button class="admin-tab" onclick="adminTab('rcon',this)">🔌 RCON</button>
     </div>
     <div id="adminOrders">
       <div class="sec-label">Siparişler & Ödemeler</div>
@@ -665,10 +660,41 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
       <div class="sec-label">Kullanıcılar & Rank Ata</div>
       <div id="adminUsersList"></div>
     </div>
+    <div id="adminRcon" style="display:none">
+      <div class="sec-label">RCON Ayarları & Manuel Komut</div>
+      <div style="background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:6px;padding:1.25rem;margin-bottom:1rem">
+        <div class="form-group">
+          <label class="form-label">RCON Host</label>
+          <input type="text" class="form-input" id="rconHost" value="goldenmcee.falixsvr.me" placeholder="sunucu.ip">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+          <div class="form-group">
+            <label class="form-label">Port</label>
+            <input type="text" class="form-input" id="rconPort" value="25575" placeholder="25575">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Şifre</label>
+            <input type="password" class="form-input" id="rconPass" value="goldenmc" placeholder="••••••">
+          </div>
+        </div>
+        <div style="display:flex;gap:0.5rem;margin-top:0.25rem">
+          <button class="btn btn-outline btn-sm" onclick="rconTest()">🔌 Bağlantıyı Test Et</button>
+          <button class="btn btn-ghost btn-sm" onclick="saveRconCfg()">💾 Kaydet</button>
+        </div>
+      </div>
+      <div class="sec-label" style="margin-top:1.5rem">Manuel Komut Gönder</div>
+      <div style="display:flex;gap:0.5rem;margin-bottom:1rem">
+        <input type="text" class="form-input" id="rconCmd" placeholder="lp user SteveAlex group set VIP" style="flex:1">
+        <button class="btn btn-gold btn-sm" onclick="rconSendManual()">▶ Gönder</button>
+      </div>
+      <div id="rconLog" style="background:rgba(0,0,0,0.5);border:1px solid var(--border);border-radius:4px;padding:0.85rem;min-height:100px;font-family:monospace;font-size:0.75rem;color:var(--muted2);white-space:pre-wrap;max-height:250px;overflow-y:auto">
+> RCON log başlatılıyor...
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════════════ MOD PANEL ═══════════════════ -->
+<!-- MOD PANEL -->
 <div class="page" id="page-mod">
   <div class="admin-wrap">
     <div class="admin-head">
@@ -695,7 +721,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
 
 </div><!-- end .app -->
 
-<!-- ═══════════════════ BUY MODAL ═══════════════════ -->
+<!-- BUY MODAL -->
 <div class="modal-wrap" id="buyModal">
   <div class="modal">
     <button class="modal-x" onclick="closeBuy()">✕</button>
@@ -705,7 +731,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
       <button class="pay-tab" onclick="setPayTab('paytr',this)">💳 PayTR</button>
     </div>
 
-    <!-- HAVALE FORM -->
+    <!-- HAVALE -->
     <div id="tabHavale">
       <div class="form-group">
         <label class="form-label">Minecraft Kullanıcı Adı</label>
@@ -722,8 +748,8 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
       <div class="bank-box">
         <div class="bank-row">
           <span class="bank-k">Ad Soyad</span>
-          <span class="bank-v">UMUT YILMAZ</span>
-          <button class="copy-btn" onclick="copyText('UMUT YILMAZ')">KOPYALA</button>
+          <span class="bank-v">DİLARA BUZ</span>
+          <button class="copy-btn" onclick="copyText('DİLARA BUZ')">KOPYALA</button>
         </div>
         <div class="bank-row">
           <span class="bank-k">IBAN</span>
@@ -741,10 +767,10 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
         </div>
       </div>
       <button class="btn btn-gold btn-full btn-md" style="margin-top:1rem" onclick="submitOrder('Havale/EFT')">✓ Sipariş Oluştur</button>
-      <p class="pay-note">Ödeme açıklamasına kullanıcı adınızı ve paket adını yazın. Havale sonrası sipariş oluşturun, yönetici onaylar ve rank atanır.</p>
+      <p class="pay-note">Ödeme açıklamasına kullanıcı adınızı ve paket adını yazın. Havale sonrası sipariş oluşturun, yönetici onaylar ve rank otomatik atanır.</p>
     </div>
 
-    <!-- PAYTR FORM -->
+    <!-- PAYTR -->
     <div id="tabPaytr" style="display:none">
       <div class="paytr-coming">
         <strong>💳 PayTR Entegrasyonu</strong>
@@ -762,12 +788,15 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
 // ════════════════════════════════════════
 //  DATA LAYER
 // ════════════════════════════════════════
-const UK='gmc_users', OK='gmc_orders', SK='gmc_session';
+const UK='gmc_users', OK='gmc_orders', SK='gmc_session', RK='gmc_rcon';
 
 const PRESET=[
   {username:'umut1313',password:'umutum13132141',email:'umut1313@goldenmcee.com',rank:'GoldenVIP+',role:'admin',date:'01.01.2025'},
   {username:'umut1366',password:'Hallah1366',email:'umut1366@goldenmcee.com',rank:'GoldenVIP+',role:'mod',date:'01.01.2025'}
 ];
+
+// Default RCON config
+const RCON_DEFAULT={host:'goldenmcee.falixsvr.me',port:25575,password:'goldenmc'};
 
 function getUsers(){
   let u=[];
@@ -781,9 +810,154 @@ function saveOrders(o){try{localStorage.setItem(OK,JSON.stringify(o))}catch{}}
 function getSession(){try{return JSON.parse(localStorage.getItem(SK)||'null')}catch{return null}}
 function setSession(u){try{localStorage.setItem(SK,JSON.stringify(u))}catch{}}
 function clearSession(){try{localStorage.removeItem(SK)}catch{}}
+function getRconCfg(){try{return JSON.parse(localStorage.getItem(RK)||'null')||RCON_DEFAULT}catch{return RCON_DEFAULT}}
+function saveRconCfgData(d){try{localStorage.setItem(RK,JSON.stringify(d))}catch{}}
 
-let CU=getSession(); // current user
+let CU=getSession();
 let buyRank='', buyPrice=0, payTab='havale';
+
+// ════════════════════════════════════════
+//  RCON — Web-based proxy approach
+//  Tarayıcı TCP RCON yapamaz; bu yüzden
+//  mevcut RCON komutlarını kaydedip
+//  "bekleyen RCON komutları" olarak saklarız.
+//  Admin panelinde manuel çalıştırma + log görünür.
+//  Gerçek RCON için sunucu tarafı proxy gerekir.
+// ════════════════════════════════════════
+
+const RCON_Q_KEY='gmc_rcon_queue';
+
+function getRconQueue(){try{return JSON.parse(localStorage.getItem(RCON_Q_KEY)||'[]')}catch{return[]}}
+function saveRconQueue(q){try{localStorage.setItem(RCON_Q_KEY,JSON.stringify(q))}catch{}}
+
+// Rank → LuckPerms command
+function rankToCommand(username, rank){
+  // lp user <player> group set <group>
+  const groupMap={
+    'VIP':'vip',
+    'VIP+':'vipplus',
+    'KVIP':'kvip',
+    'KVIP+':'kvipplus',
+    'GoldenVIP':'goldenvip',
+    'GoldenVIP+':'goldenvipplus',
+    'Üye':'default'
+  };
+  const grp=groupMap[rank]||rank.toLowerCase().replace(/\+/g,'plus').replace(/\s/g,'');
+  return `lp user ${username} group set ${grp}`;
+}
+
+// Attempt real RCON via WebSocket proxy (if available)
+// Falls back gracefully — queues command for manual execution
+async function rconSend(command){
+  const cfg=getRconCfg();
+  rconLog(`> Komut: ${command}`);
+
+  // Try a WebSocket-based RCON proxy if running locally (e.g. node rcon-ws-proxy)
+  // URL: ws://localhost:4567  — only works if user has proxy running
+  const wsUrl='ws://localhost:4567';
+  return new Promise((resolve)=>{
+    let ws;
+    try{
+      ws=new WebSocket(wsUrl);
+      ws.onopen=()=>{
+        ws.send(JSON.stringify({host:cfg.host,port:cfg.port,password:cfg.password,command}));
+      };
+      ws.onmessage=(e)=>{
+        let d;
+        try{d=JSON.parse(e.data)}catch{d={response:e.data}}
+        rconLog(`< ${d.response||'OK'}`);
+        setRconStatus('ok','RCON Bağlı');
+        ws.close();
+        resolve({ok:true,response:d.response});
+      };
+      ws.onerror=()=>{
+        fallbackQueue(command);
+        ws.close();
+        resolve({ok:false});
+      };
+      ws.onclose=(e)=>{
+        if(e.code!==1000&&e.code!==1005)fallbackQueue(command);
+      };
+      setTimeout(()=>{
+        if(ws.readyState!==WebSocket.OPEN&&ws.readyState!==WebSocket.CONNECTING){return}
+        if(ws.readyState===WebSocket.CONNECTING){ws.close();fallbackQueue(command);resolve({ok:false})}
+      },3000);
+    }catch(err){
+      fallbackQueue(command);
+      resolve({ok:false});
+    }
+  });
+}
+
+function fallbackQueue(command){
+  const cfg=getRconCfg();
+  const q=getRconQueue();
+  q.push({command,host:cfg.host,port:cfg.port,ts:new Date().toLocaleString('tr-TR')});
+  saveRconQueue(q);
+  rconLog(`! Proxy bulunamadı — komut kuyruğa alındı: ${command}`);
+  rconLog(`  Sunucuda çalıştır: /rcon ${command}`);
+  setRconStatus('err','Proxy Yok — Kuyrukta');
+}
+
+function setRconStatus(type,label){
+  const dot=document.getElementById('rconDot');
+  const lbl=document.getElementById('rconLabel');
+  if(!dot||!lbl)return;
+  dot.className='rcon-dot '+(type==='ok'?'ok':type==='spin'?'spin':'err');
+  lbl.textContent=label;
+}
+
+function rconLog(msg){
+  const el=document.getElementById('rconLog');
+  if(!el)return;
+  el.textContent+='\n'+msg;
+  el.scrollTop=el.scrollHeight;
+}
+
+async function rconTest(){
+  setRconStatus('spin','Test ediliyor...');
+  const cfg=getRconCfg();
+  rconLog(`\n> Bağlantı testi: ${cfg.host}:${cfg.port}`);
+  const res=await rconSend('list');
+  if(res.ok){
+    toast('RCON bağlantısı başarılı! ✓','ok');
+  }else{
+    toast('RCON proxy bulunamadı — komutlar kuyruğa alınacak','inf');
+  }
+}
+
+function saveRconCfg(){
+  const d={
+    host:document.getElementById('rconHost').value.trim()||'goldenmcee.falixsvr.me',
+    port:parseInt(document.getElementById('rconPort').value)||25575,
+    password:document.getElementById('rconPass').value||'goldenmc'
+  };
+  saveRconCfgData(d);
+  toast('RCON ayarları kaydedildi.','ok');
+}
+
+async function rconSendManual(){
+  const cmd=document.getElementById('rconCmd').value.trim();
+  if(!cmd){toast('Komut gir.','err');return}
+  setRconStatus('spin','Gönderiliyor...');
+  await rconSend(cmd);
+  document.getElementById('rconCmd').value='';
+}
+
+// Auto-give rank via RCON when admin approves
+async function autoRankViaRcon(username, rank){
+  const cmd=rankToCommand(username,rank);
+  rconLog(`\n> Otonom rank atama: ${username} → ${rank}`);
+  rconLog(`> Komut: ${cmd}`);
+  setRconStatus('spin','Rank atanıyor...');
+  const res=await rconSend(cmd);
+  if(res.ok){
+    toast(`${username} → ${rank} RCON ile atandı! 🏆`,'ok');
+  }else{
+    toast(`${username} için komut kuyruğa alındı: ${cmd}`,'inf');
+  }
+  return res;
+}
 
 // ════════════════════════════════════════
 //  ROUTING
@@ -934,6 +1108,21 @@ function adminTab(t,btn){
   btn.classList.add('active');
   document.getElementById('adminOrders').style.display=t==='orders'?'block':'none';
   document.getElementById('adminUsers').style.display=t==='users'?'block':'none';
+  document.getElementById('adminRcon').style.display=t==='rcon'?'block':'none';
+  if(t==='rcon'){
+    const cfg=getRconCfg();
+    document.getElementById('rconHost').value=cfg.host;
+    document.getElementById('rconPort').value=cfg.port;
+    document.getElementById('rconPass').value=cfg.password;
+    // Show pending queue
+    const q=getRconQueue();
+    if(q.length>0){
+      rconLog(`\n> Kuyrukta ${q.length} komut var:`);
+      q.forEach((item,i)=>{
+        rconLog(`  ${i+1}. [${item.ts}] ${item.command}`);
+      });
+    }
+  }
 }
 
 function renderAdmin(){
@@ -945,9 +1134,9 @@ function renderAdmin(){
   document.getElementById('asGel').textContent=orders.filter(o=>o.status==='Onaylandı'||o.status==='Ödeme Başarılı').reduce((a,o)=>a+o.price,0)+'₺';
   document.getElementById('asUsr').textContent=users.length;
 
-  // Orders
   const ob=document.getElementById('adminOrdersBody');
-  if(!orders.length){ob.innerHTML=`<tr><td colspan="8" class="tbl-empty">Henüz sipariş yok.</td></tr>`;
+  if(!orders.length){
+    ob.innerHTML=`<tr><td colspan="8" class="tbl-empty">Henüz sipariş yok.</td></tr>`;
   }else{
     ob.innerHTML=orders.map((o,i)=>`
       <tr>
@@ -970,12 +1159,12 @@ function renderAdmin(){
               <option>GoldenVIP</option><option>GoldenVIP+</option>
             </select>
             <button class="ab ab-rank" onclick="giveRankFromOrder(${i})">🏆 Ver</button>
+            <button class="ab ab-rcon" onclick="autoApproveAndRank(${i})" title="Onayla + RCON ile rank ver">⚡ Otonom</button>
           </div>
         </td>
       </tr>`).join('');
   }
 
-  // Users
   const ul=document.getElementById('adminUsersList');
   ul.innerHTML=users.map((u,i)=>`
     <div class="user-row-admin">
@@ -991,6 +1180,7 @@ function renderAdmin(){
         <option>KVIP</option><option>KVIP+</option>
         <option>GoldenVIP</option><option>GoldenVIP+</option>
       </select>
+      <button class="ab ab-rcon" style="margin-left:0.25rem" onclick="rconRankUser(${i})" title="RCON ile rank ver">⚡</button>
     </div>`).join('');
 }
 
@@ -1000,6 +1190,31 @@ function orderAction(idx,status){
   orders[idx].status=status;
   saveOrders(orders);
   toast('Durum: '+status,'ok');
+  renderAdmin();
+}
+
+// ⚡ Otonom: Onayla + panelde rank ata + RCON'a gönder
+async function autoApproveAndRank(idx){
+  const orders=getOrders();
+  const order=orders[idx];
+  if(!order)return;
+
+  // Status → Onaylandı
+  orders[idx].status='Onaylandı';
+  saveOrders(orders);
+
+  // Panel'de rank ata
+  const users=getUsers();
+  const ui=users.findIndex(u=>u.username===order.username);
+  if(ui!==-1){
+    users[ui].rank=order.package;
+    saveUsers(users);
+    if(CU&&CU.username===users[ui].username){CU.rank=order.package;setSession(CU)}
+  }
+
+  // RCON'a gönder
+  await autoRankViaRcon(order.username, order.package);
+
   renderAdmin();
 }
 
@@ -1024,6 +1239,15 @@ function giveRankToUser(idx,rank){
   if(CU&&CU.username===users[idx].username){CU.rank=rank;setSession(CU)}
   toast(users[idx].username+' → '+rank+' verildi! 🏆','ok');
   setTimeout(renderAdmin,200);
+}
+
+// RCON ile kullanıcıya rank gönder (users tab)
+async function rconRankUser(idx){
+  const users=getUsers();
+  const u=users[idx];
+  if(!u||!u.rank||u.rank==='Üye'){toast('Önce rank ata.','err');return}
+  adminTab('rcon',document.querySelectorAll('.admin-tab')[2]);
+  await autoRankViaRcon(u.username,u.rank);
 }
 
 // ════════════════════════════════════════
@@ -1097,7 +1321,7 @@ function toast(msg,type){
   const el=document.getElementById('toast');
   el.textContent=msg;el.className='toast show '+(type||'');
   clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),3500);
 }
 
 // ════════════════════════════════════════
