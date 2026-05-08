@@ -3,1155 +3,1119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldenMC — Premium Minecraft Sunucusu</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<title>GoldenMC — goldenmcee.falixsvr.me</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --gold: #FFD700;
-  --gold2: #FFA500;
-  --gold3: #B8860B;
-  --gold4: #3d2a00;
-  --dark: #060608;
-  --dark2: #0d0d10;
-  --dark3: #141418;
-  --dark4: #1c1c22;
-  --green: #00ff88;
-  --diamond: #4dd9ff;
-  --red: #ff4455;
-  --purple: #a855f7;
-  --text: #f0f0f0;
-  --text2: #888899;
-  --text3: #555566;
-  --border: rgba(255,215,0,0.12);
-  --border2: rgba(255,215,0,0.06);
-  --glow: 0 0 40px rgba(255,215,0,0.15);
-  --radius: 10px;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{font-family:'Space Grotesk',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:root{
+  --gold:#FFD700;--gold2:#FFA500;--gold3:#B8860B;--gold4:#fff8dc;
+  --dark:#080706;--dark2:#100e0b;--dark3:#181510;--dark4:#201c14;
+  --text:#e8d9a0;--muted:#6a5a35;--muted2:#9a8a5a;
+  --green:#4ade80;--red:#f87171;--blue:#60a5fa;--purple:#a78bfa;
+  --border:rgba(255,215,0,0.12);--border2:rgba(255,215,0,0.25);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--dark);color:var(--text);
+  font-family:'Rajdhani',sans-serif;font-size:15px;
+  min-height:100vh;overflow-x:hidden;
+}
 
-/* ── NOISE OVERLAY ── */
+/* NOISE TEXTURE OVERLAY */
+body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:0.4;
+}
+
+/* GRID PATTERN */
 body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  opacity:0.025;
-}
-
-/* ── CANVAS PARTICLES ── */
-#canvas{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.6}
-
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  height:66px;display:flex;align-items:center;justify-content:space-between;
-  padding:0 clamp(20px,4vw,60px);
-  background:rgba(6,6,8,0.85);backdrop-filter:blur(24px) saturate(180%);
-  border-bottom:1px solid var(--border);
-  transition:var(--transition);
-}
-nav.scrolled{background:rgba(6,6,8,0.97);box-shadow:0 4px 30px rgba(0,0,0,0.5)}
-.nav-logo{
-  font-family:'Cinzel Decorative',serif;font-size:1.35rem;letter-spacing:3px;
-  background:linear-gradient(135deg,var(--gold3) 0%,var(--gold) 40%,var(--gold2) 70%,#fff5b0 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  text-decoration:none;
-  filter:drop-shadow(0 0 20px rgba(255,215,0,0.4));
-}
-.nav-links{display:flex;align-items:center;gap:8px;list-style:none}
-.nav-links a{
-  color:var(--text2);text-decoration:none;font-size:0.82rem;font-weight:500;
-  letter-spacing:1.5px;text-transform:uppercase;padding:8px 14px;border-radius:6px;
-  transition:var(--transition);position:relative;
-}
-.nav-links a:hover{color:var(--text);background:rgba(255,215,0,0.07)}
-.nav-links a.active{color:var(--gold)}
-.nav-right{display:flex;align-items:center;gap:10px}
-.ip-badge{
-  font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:700;
-  letter-spacing:1px;color:#000;background:linear-gradient(135deg,var(--gold3),var(--gold));
-  padding:9px 18px;border-radius:6px;cursor:pointer;border:none;
-  transition:var(--transition);white-space:nowrap;
-}
-.ip-badge:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(255,215,0,0.35)}
-.nav-hamburger{display:none;background:none;border:1px solid var(--border);color:var(--text2);padding:8px 10px;border-radius:6px;cursor:pointer;font-size:1rem}
-.mobile-menu{display:none;position:fixed;top:66px;left:0;right:0;background:rgba(6,6,8,0.98);border-bottom:1px solid var(--border);padding:16px;z-index:999}
-.mobile-menu.open{display:block}
-.mobile-menu a{display:block;color:var(--text2);text-decoration:none;padding:12px 16px;border-radius:6px;font-size:0.9rem;letter-spacing:1px;text-transform:uppercase;transition:var(--transition)}
-.mobile-menu a:hover{color:var(--gold);background:rgba(255,215,0,0.07)}
-
-/* ── SECTIONS ── */
-section{position:relative;z-index:2}
-
-/* ── HERO ── */
-.hero{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:100px 20px 60px;
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(ellipse 90% 70% at 50% -10%, rgba(255,165,0,0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,215,0,0.05) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0,229,255,0.04) 0%, transparent 50%),
-    var(--dark);
+    linear-gradient(rgba(255,215,0,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,215,0,0.025) 1px,transparent 1px);
+  background-size:40px 40px;
 }
-.hero::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:200px;
-  background:linear-gradient(to bottom,transparent,var(--dark));pointer-events:none;
-}
-.hero-inner{position:relative;z-index:1;max-width:860px;width:100%}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.2);
-  color:var(--gold);padding:7px 18px;border-radius:100px;
-  font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;
-  margin-bottom:32px;font-weight:600;
-  animation:fadeUp 0.8s ease both;
-}
-.hero-eyebrow::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-.hero-title{
-  font-family:'Cinzel Decorative',serif;
-  font-size:clamp(3rem,10vw,7rem);line-height:0.95;
-  letter-spacing:-1px;margin-bottom:12px;
-  background:linear-gradient(180deg,#ffffff 0%,var(--gold) 50%,var(--gold2) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:fadeUp 0.8s 0.15s ease both;
-  filter:drop-shadow(0 0 60px rgba(255,180,0,0.3));
-}
-.hero-subtitle{
-  font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem,3vw,1.6rem);
-  letter-spacing:6px;color:var(--text2);text-transform:uppercase;
-  margin-bottom:28px;animation:fadeUp 0.8s 0.25s ease both;
-}
-.hero-desc{
-  font-size:1.05rem;color:var(--text2);line-height:1.7;max-width:560px;
-  margin:0 auto 44px;animation:fadeUp 0.8s 0.35s ease both;
-}
-.hero-desc strong{color:var(--gold);font-weight:600}
-.hero-cta{
-  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
-  margin-bottom:60px;animation:fadeUp 0.8s 0.45s ease both;
-}
-.btn-gold{
-  background:linear-gradient(135deg,var(--gold3) 0%,var(--gold) 50%,var(--gold2) 100%);
-  background-size:200% auto;
-  color:#000;font-weight:700;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;
-  padding:14px 32px;border:none;border-radius:8px;cursor:pointer;
-  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
-  transition:var(--transition);animation:goldShine 4s linear infinite;
-}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(255,180,0,0.4)}
-@keyframes goldShine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-.btn-outline{
-  background:transparent;border:1px solid rgba(255,215,0,0.3);color:var(--gold);
-  font-weight:600;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;
-  padding:14px 32px;border-radius:8px;cursor:pointer;
-  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
-  transition:var(--transition);
-}
-.btn-outline:hover{background:rgba(255,215,0,0.08);border-color:var(--gold);transform:translateY(-2px)}
-.hero-server-card{
-  display:inline-flex;align-items:center;gap:20px;
-  background:rgba(255,255,255,0.03);border:1px solid var(--border);
-  border-radius:12px;padding:18px 32px;
-  animation:fadeUp 0.8s 0.55s ease both;
-  box-shadow:0 0 0 1px var(--border2);
-}
-.server-dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green),0 0 24px rgba(0,255,136,0.3);animation:serverPulse 2.5s ease-in-out infinite}
-@keyframes serverPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:0.7}}
-.server-ip{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:var(--gold);letter-spacing:2px}
-.server-players{font-size:0.78rem;color:var(--text3);letter-spacing:1px;font-family:'JetBrains Mono',monospace}
-#playerText{color:var(--green);font-weight:600}
-.hero-stats{
-  display:flex;justify-content:center;gap:clamp(24px,5vw,60px);
-  margin-top:60px;padding-top:60px;border-top:1px solid var(--border2);
-  animation:fadeUp 0.8s 0.65s ease both;flex-wrap:wrap;
-}
-.hero-stat .num{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;letter-spacing:2px}
-.hero-stat .lbl{font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-top:4px}
 
-/* ── SECTION HEADER ── */
-.sec-head{text-align:center;margin-bottom:60px}
-.sec-tag{
-  display:inline-block;font-size:0.7rem;letter-spacing:4px;text-transform:uppercase;
-  color:var(--gold);padding:5px 14px;border:1px solid rgba(255,215,0,0.2);
-  border-radius:100px;margin-bottom:16px;
-}
-.sec-title{
-  font-family:'Cinzel Decorative',serif;font-size:clamp(1.8rem,4vw,2.8rem);
-  background:linear-gradient(135deg,var(--gold3),var(--gold),var(--gold2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:12px;
-}
-.sec-desc{color:var(--text2);font-size:0.95rem;max-width:520px;margin:0 auto;line-height:1.7}
-.gold-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:20px auto 0}
+.app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
 
-/* ── FEATURES ── */
-.features{padding:100px 20px;background:var(--dark2)}
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:1200px;margin:0 auto}
-.feat-card{
-  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);
-  border-radius:12px;padding:32px 28px;transition:var(--transition);
+/* ═══════════════════════════════ NAV ═══════════════════════════════ */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.85rem 2rem;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,7,6,0.95);
+  backdrop-filter:blur(20px);
+  position:sticky;top:0;z-index:200;
+  gap:1rem;
+}
+.nav-logo{
+  font-family:'Cinzel',serif;font-weight:900;font-size:1.15rem;
+  letter-spacing:3px;
+  background:linear-gradient(135deg,#FFD700 0%,#FFA500 50%,#FFD700 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  white-space:nowrap;cursor:pointer;
+}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-link{
+  color:var(--muted);text-decoration:none;font-size:0.72rem;
+  font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;transition:color 0.2s;border:none;background:none;
+  font-family:'Rajdhani',sans-serif;padding:0;
+}
+.nav-link:hover{color:var(--gold)}
+.nav-right{display:flex;gap:0.5rem;align-items:center}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;
+  border:none;cursor:pointer;font-family:'Rajdhani',sans-serif;
+  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  transition:all 0.2s;border-radius:3px;text-decoration:none;}
+.btn-xs{font-size:0.68rem;padding:0.3rem 0.75rem}
+.btn-sm{font-size:0.75rem;padding:0.4rem 1rem}
+.btn-md{font-size:0.82rem;padding:0.6rem 1.4rem}
+.btn-lg{font-size:0.88rem;padding:0.75rem 2rem}
+.btn-gold{background:linear-gradient(135deg,#FFD700,#FFA500);color:#080706}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,165,0,0.35)}
+.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--gold)}
+.btn-outline:hover{background:rgba(255,215,0,0.08);border-color:var(--gold)}
+.btn-ghost{background:rgba(255,215,0,0.06);border:1px solid var(--border);color:var(--muted2)}
+.btn-ghost:hover{background:rgba(255,215,0,0.12);color:var(--gold)}
+.btn-danger{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.2);color:#f87171}
+.btn-danger:hover{background:rgba(248,113,113,0.2)}
+.btn-full{width:100%}
+
+/* USER PILL */
+.user-pill{
+  display:flex;align-items:center;gap:0.5rem;
+  background:rgba(255,215,0,0.06);border:1px solid var(--border);
+  border-radius:20px;padding:0.25rem 0.85rem 0.25rem 0.35rem;
+  cursor:pointer;transition:all 0.2s;
+}
+.user-pill:hover{background:rgba(255,215,0,0.12);border-color:var(--border2)}
+.user-av{
+  width:24px;height:24px;border-radius:50%;
+  background:linear-gradient(135deg,#FFD700,#FFA500);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.62rem;font-weight:900;color:#080706;flex-shrink:0;
+}
+.user-pill-name{font-size:0.75rem;font-weight:700;color:var(--gold);letter-spacing:1px}
+.badge{font-size:0.55rem;padding:2px 5px;border-radius:2px;font-weight:800;letter-spacing:0.5px;margin-left:2px}
+.badge-admin{background:#5b21b6;color:#ddd6fe}
+.badge-mod{background:#065f46;color:#6ee7b7}
+
+/* ═══════════════════════════════ PAGES ═══════════════════════════════ */
+.page{display:none;flex:1;animation:fadeIn 0.25s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════════════════════ HERO ═══════════════════════════════ */
+.hero{
+  text-align:center;padding:5rem 2rem 4rem;
   position:relative;overflow:hidden;
 }
-.feat-card::before{
-  content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.4s;
-  background:radial-gradient(ellipse at var(--mx,50%) var(--my,50%),rgba(255,215,0,0.06) 0%,transparent 60%);
+.hero-glow{
+  position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,165,0,0.07) 0%,transparent 70%);
+  pointer-events:none;
 }
-.feat-card:hover{border-color:rgba(255,215,0,0.2);transform:translateY(-4px)}
-.feat-card:hover::before{opacity:1}
-.feat-icon{font-size:2rem;margin-bottom:16px;display:block}
-.feat-name{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:8px;letter-spacing:0.5px}
-.feat-desc{font-size:0.85rem;color:var(--text2);line-height:1.6}
+.hero-tag{
+  display:inline-block;
+  background:rgba(255,160,0,0.08);border:1px solid rgba(255,160,0,0.2);
+  color:#FFA500;font-size:0.65rem;letter-spacing:4px;
+  padding:0.3rem 1rem;border-radius:2px;text-transform:uppercase;
+  margin-bottom:1.5rem;
+}
+.hero h1{
+  font-family:'Cinzel',serif;font-weight:900;
+  font-size:clamp(2.5rem,9vw,6rem);
+  line-height:0.95;letter-spacing:6px;
+  background:linear-gradient(160deg,#FFE566 0%,#FFD700 35%,#FFA500 65%,#FFD700 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:0.5rem;
+}
+.hero-sub{
+  font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:8px;
+  color:var(--muted);margin-bottom:2rem;text-transform:uppercase;
+}
+.hero-ip{
+  display:inline-flex;align-items:center;gap:0.85rem;
+  background:rgba(255,215,0,0.05);border:1px solid var(--border);
+  padding:0.7rem 1.4rem;border-radius:4px;cursor:pointer;
+  margin-bottom:2.5rem;transition:all 0.2s;
+}
+.hero-ip:hover{background:rgba(255,215,0,0.1);border-color:var(--border2)}
+.ip-text{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);letter-spacing:2px;font-weight:600}
+.ip-copy{font-size:0.62rem;color:var(--muted);letter-spacing:2px;border-left:1px solid var(--border);padding-left:0.85rem}
+.hero-btns{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
 
-/* ── ACCOUNT ── */
-.account{padding:100px 20px;background:var(--dark)}
-.login-container{max-width:480px;margin:0 auto}
-.glass-box{
-  background:rgba(255,255,255,0.02);border:1px solid var(--border);
-  border-radius:14px;padding:44px 40px;position:relative;overflow:hidden;
+/* STATUS BAR */
+.status-bar{
+  display:flex;justify-content:center;gap:0;
+  margin:0 2rem 4rem;
+  border:1px solid var(--border);border-radius:5px;
+  background:rgba(255,215,0,0.02);
+  overflow:hidden;flex-wrap:wrap;
+  max-width:900px;margin-left:auto;margin-right:auto;
 }
-.glass-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.glass-box-title{font-family:'Cinzel Decorative',serif;font-size:1.3rem;color:var(--gold);text-align:center;margin-bottom:6px}
-.glass-box-sub{text-align:center;color:var(--text3);font-size:0.85rem;margin-bottom:32px}
-.field{margin-bottom:18px}
-.field label{display:block;font-size:0.72rem;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600}
-.field input,.field select,.field textarea{
-  width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);
-  border-radius:8px;padding:12px 16px;color:var(--text);
-  font-family:'Space Grotesk',sans-serif;font-size:0.95rem;outline:none;
-  transition:border-color 0.2s,box-shadow 0.2s;
+.stat{
+  flex:1;min-width:120px;text-align:center;
+  padding:1.25rem 1rem;
+  border-right:1px solid var(--border);
 }
-.field input:focus,.field select:focus,.field textarea:focus{
-  border-color:rgba(255,215,0,0.4);box-shadow:0 0 0 3px rgba(255,215,0,0.06);
+.stat:last-child{border-right:none}
+.stat-v{
+  font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;
+  color:var(--gold);display:block;margin-bottom:0.2rem;
 }
-.field input::placeholder,.field textarea::placeholder{color:#444455}
-.field select{background:rgba(12,12,16,0.98)}
-.field textarea{resize:vertical;min-height:110px}
-.btn-full{
-  width:100%;background:linear-gradient(135deg,var(--gold3),var(--gold));
-  color:#000;font-weight:700;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;
-  padding:14px;border:none;border-radius:8px;cursor:pointer;transition:var(--transition);
-  margin-top:4px;
+.stat-l{font-size:0.6rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--green);margin-right:5px;
+  animation:blink 2s infinite;
 }
-.btn-full:hover{box-shadow:0 8px 28px rgba(255,215,0,0.3);transform:translateY(-1px)}
-.btn-full:disabled{opacity:0.45;cursor:not-allowed;transform:none}
-.form-msg{min-height:36px;text-align:center;font-size:0.9rem;margin-top:16px;line-height:1.4}
-.form-msg.ok{color:var(--green)}
-.form-msg.err{color:var(--red)}
-.user-info{
-  display:none;background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.15);
-  border-radius:10px;padding:24px;margin-top:20px;text-align:center;
-}
-.rank-pill{
-  display:inline-block;padding:5px 16px;border-radius:100px;font-size:0.8rem;
-  font-weight:700;letter-spacing:2px;text-transform:uppercase;margin:8px 4px;
-}
-.admin-link{
-  display:inline-flex;align-items:center;gap:8px;margin-top:16px;
-  background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.18));
-  border:1px solid rgba(255,215,0,0.3);color:var(--gold);
-  padding:10px 22px;border-radius:8px;cursor:pointer;border:none;
-  font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;
-  letter-spacing:1px;transition:var(--transition);
-}
-.admin-link:hover{background:rgba(255,215,0,0.2);transform:translateY(-1px)}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px var(--green)}50%{opacity:0.3;box-shadow:none}}
 
-/* ── VIP PACKAGES ── */
-.vip{padding:100px 20px;background:var(--dark2)}
-.vip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:1320px;margin:0 auto}
-.vip-card{
-  background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);
-  border-radius:14px;padding:32px 24px;text-align:center;position:relative;
-  overflow:hidden;transition:var(--transition);cursor:default;
+/* ═══════════════════════════════ SECTION ═══════════════════════════════ */
+.sec{padding:3.5rem 2rem;max-width:1100px;margin:0 auto}
+.sec-title{
+  font-family:'Cinzel',serif;font-weight:700;
+  font-size:clamp(1.3rem,3.5vw,1.9rem);
+  text-align:center;margin-bottom:0.4rem;
+  background:linear-gradient(135deg,#FFD700,#FFA500);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.vip-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c)}
-.vip-card.hot{border-color:rgba(255,215,0,0.3);background:rgba(255,215,0,0.04);box-shadow:0 0 50px rgba(255,215,0,0.08)}
-.hot-badge{position:absolute;top:14px;right:-24px;background:var(--gold);color:#000;font-size:0.6rem;font-weight:800;letter-spacing:2px;padding:4px 30px;transform:rotate(45deg);text-transform:uppercase}
-.vip-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.4);border-color:var(--c)}
-.vip-emoji{font-size:2.4rem;margin-bottom:10px;display:block}
-.vip-name{font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:700;color:var(--c);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
-.vip-price-wrap{margin:20px 0}
-.vip-price{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:#fff;line-height:1;letter-spacing:1px}
-.vip-currency{font-size:0.85rem;color:var(--text3);letter-spacing:1px;margin-top:2px}
-.vip-divider{width:40px;height:1px;background:rgba(255,255,255,0.08);margin:20px auto}
-.vip-perks{list-style:none;text-align:left;margin-bottom:28px}
-.vip-perks li{
-  font-size:0.82rem;color:var(--text2);padding:6px 0;
-  display:flex;align-items:flex-start;gap:8px;
-  border-bottom:1px solid rgba(255,255,255,0.04);
+.sec-sub{text-align:center;color:var(--muted);font-size:0.65rem;letter-spacing:3px;margin-bottom:0.8rem;text-transform:uppercase}
+.divider{
+  width:60px;height:1px;margin:0 auto 2.5rem;
+  background:linear-gradient(90deg,transparent,var(--gold3),transparent);
 }
-.vip-perks li::before{content:'›';color:var(--c);font-size:1rem;flex-shrink:0;font-weight:700;margin-top:-1px}
-.btn-buy{
-  width:100%;background:var(--c);color:#000;font-weight:700;font-size:0.78rem;
-  letter-spacing:1.5px;text-transform:uppercase;padding:12px;border:none;
-  border-radius:8px;cursor:pointer;transition:var(--transition);
-}
-.btn-buy:hover{filter:brightness(1.15);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,0.35)}
 
-/* ── APPLICATIONS ── */
-.apps{padding:100px 20px;background:var(--dark)}
-.tabs-row{display:flex;gap:6px;justify-content:center;margin-bottom:44px;flex-wrap:wrap}
-.tab{
-  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
-  color:var(--text2);font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;
-  font-weight:600;padding:10px 22px;border-radius:8px;cursor:pointer;
-  transition:var(--transition);
+/* ═══════════════════════════════ VIP CARDS ═══════════════════════════════ */
+.vip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
+.vc{
+  background:rgba(255,215,0,0.03);border:1px solid var(--border);
+  border-radius:6px;padding:1.4rem 1rem;text-align:center;
+  cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;
 }
-.tab:hover,.tab.on{background:rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.3);color:var(--gold)}
-.app-box{max-width:680px;margin:0 auto}
-.req-box{
-  background:rgba(77,217,255,0.04);border:1px solid rgba(77,217,255,0.12);
-  border-radius:10px;padding:20px 24px;margin-bottom:32px;
+.vc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity 0.3s;
 }
-.req-box h4{color:var(--diamond);font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;font-family:'JetBrains Mono',monospace}
-.req-box ul{list-style:none}
-.req-box li{color:var(--text2);font-size:0.88rem;padding:5px 0;display:flex;gap:8px;align-items:flex-start}
-.req-box li::before{content:'→';color:var(--diamond);flex-shrink:0}
-.req-box strong{color:var(--text)}
-.tab-content{display:none}
-.tab-content.on{display:block}
-.btn-submit{
-  width:100%;background:linear-gradient(135deg,rgba(0,100,130,0.8),var(--diamond));
-  color:#000;font-weight:700;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;
-  padding:14px;border:none;border-radius:8px;cursor:pointer;transition:var(--transition);
-  margin-top:4px;
+.vc:hover{background:rgba(255,215,0,0.07);border-color:var(--border2);transform:translateY(-4px)}
+.vc:hover::before{opacity:1}
+.vc-tag{
+  font-size:0.56rem;letter-spacing:2px;font-weight:700;
+  padding:0.18rem 0.55rem;border-radius:2px;
+  display:inline-block;margin-bottom:0.65rem;text-transform:uppercase;
 }
-.btn-submit:hover{box-shadow:0 8px 28px rgba(77,217,255,0.25);transform:translateY(-1px)}
+.tag-gold{background:rgba(255,215,0,0.15);color:#FFD700;border:1px solid rgba(255,215,0,0.2)}
+.tag-blue{background:rgba(96,165,250,0.12);color:#60a5fa;border:1px solid rgba(96,165,250,0.2)}
+.tag-amber{background:rgba(251,191,36,0.12);color:#fbbf24;border:1px solid rgba(251,191,36,0.2)}
+.tag-best{background:rgba(255,100,0,0.12);color:#ff6400;border:1px solid rgba(255,100,0,0.2)}
+.vc-name{font-family:'Cinzel',serif;font-weight:700;font-size:1rem;color:var(--gold);margin-bottom:0.4rem}
+.vc-name.blue{color:#7dd3fc}
+.vc-price{font-family:'Cinzel',serif;font-size:2rem;font-weight:900;color:#fff;line-height:1}
+.vc-price span{font-size:0.8rem;color:var(--muted)}
+.vc-perks{list-style:none;margin:0.9rem 0;text-align:left}
+.vc-perks li{
+  font-size:0.75rem;color:var(--muted2);
+  padding:0.22rem 0 0.22rem 1rem;position:relative;
+}
+.vc-perks li::before{
+  content:'◆';position:absolute;left:0;
+  font-size:0.45rem;color:rgba(255,215,0,0.35);top:0.35rem;
+}
+.vc-buy{
+  width:100%;background:rgba(255,215,0,0.08);
+  border:1px solid var(--border);color:var(--gold);
+  padding:0.5rem;border-radius:3px;font-weight:700;font-size:0.72rem;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  font-family:'Rajdhani',sans-serif;transition:all 0.2s;margin-top:0.4rem;
+}
+.vc-buy:hover{background:rgba(255,215,0,0.18);border-color:var(--border2)}
+.vc-buy.blue{color:#7dd3fc;border-color:rgba(96,165,250,0.2)}
+.vc-buy.blue:hover{background:rgba(96,165,250,0.12)}
 
-/* ── ADMIN PANEL ── */
-.overlay{
-  display:none;position:fixed;inset:0;z-index:9000;
-  background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);
-  align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;
+/* ═══════════════════════════════ FEATURES ═══════════════════════════════ */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.feat-card{
+  background:rgba(255,255,255,0.015);border:1px solid rgba(255,215,0,0.07);
+  border-radius:6px;padding:1.4rem;transition:border-color 0.3s;
 }
-.overlay.show{display:flex}
-.admin-box{
-  background:var(--dark2);border:1px solid rgba(255,215,0,0.2);border-radius:16px;
-  padding:44px;max-width:960px;width:100%;position:relative;margin:auto;
+.feat-card:hover{border-color:var(--border)}
+.feat-icon{font-size:1.5rem;margin-bottom:0.65rem}
+.feat-title{font-family:'Cinzel',serif;font-size:0.88rem;color:var(--gold);margin-bottom:0.35rem}
+.feat-desc{font-size:0.78rem;color:var(--muted);line-height:1.55}
+
+/* RULES */
+.rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.75rem}
+.rule{
+  display:flex;gap:1rem;
+  background:rgba(255,255,255,0.013);border:1px solid rgba(255,215,0,0.06);
+  border-radius:5px;padding:0.9rem;
 }
-.admin-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),transparent)}
-.admin-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:var(--text2);width:36px;height:36px;border-radius:8px;font-size:1.1rem;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center}
-.admin-close:hover{color:var(--text);background:rgba(255,255,255,0.1)}
-.admin-title{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:var(--gold);text-align:center;margin-bottom:36px}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px}
-.stat-box{background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.1);border-radius:10px;padding:20px;text-align:center}
-.stat-box .n{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--gold);line-height:1}
-.stat-box .l{font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-top:4px}
-.admin-section-title{color:var(--gold);font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:16px;font-family:'JetBrains Mono',monospace}
-table{width:100%;border-collapse:collapse;font-size:0.85rem;margin-bottom:32px}
-thead th{text-align:left;padding:12px 16px;background:rgba(255,215,0,0.06);color:var(--gold);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid rgba(255,215,0,0.12)}
-tbody td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text2)}
-tbody tr:hover td{background:rgba(255,255,255,0.02)}
-.badge-ok{color:var(--green);font-size:0.75rem;font-weight:600}
-.badge-no{color:var(--red);font-size:0.75rem;font-weight:600}
-.badge-wait{color:var(--gold);font-size:0.75rem;font-weight:600}
-.act-btn{padding:5px 12px;border-radius:5px;font-size:0.75rem;font-weight:600;cursor:pointer;border:1px solid;transition:var(--transition)}
-.act-approve{background:rgba(0,255,136,0.1);border-color:rgba(0,255,136,0.3);color:var(--green)}
-.act-approve:hover{background:rgba(0,255,136,0.2)}
-.act-reject{background:rgba(255,68,85,0.1);border-color:rgba(255,68,85,0.3);color:var(--red);margin-left:6px}
-.act-reject:hover{background:rgba(255,68,85,0.2)}
-.manual-row{display:flex;gap:10px;flex-wrap:wrap}
-.manual-row input,.manual-row select{
-  flex:1;min-width:160px;background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);border-radius:8px;
-  padding:11px 14px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.9rem;outline:none;
+.rule-n{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:900;color:rgba(255,215,0,0.15);line-height:1;min-width:2rem}
+.rule-title{color:var(--text);font-weight:700;margin-bottom:0.2rem;font-size:0.85rem}
+.rule-desc{font-size:0.75rem;color:var(--muted);line-height:1.45}
+
+/* JOIN STEPS */
+.steps{display:flex;flex-wrap:wrap;justify-content:center;gap:0}
+.step{flex:1;min-width:160px;max-width:210px;text-align:center;padding:1.5rem 1rem;position:relative}
+.step:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:48%;transform:translateY(-50%);color:var(--muted);font-size:1rem}
+.step-num{
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 0.85rem;font-family:'Cinzel',serif;
+  font-weight:700;color:var(--gold);font-size:1rem;
+}
+.step-title{font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold);margin-bottom:0.35rem}
+.step-desc{font-size:0.75rem;color:var(--muted);line-height:1.45}
+
+/* ═══════════════════════════════ AUTH ═══════════════════════════════ */
+.auth-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.auth-card{
+  background:var(--dark3);border:1px solid var(--border2);
+  border-radius:8px;padding:2rem;width:100%;max-width:380px;
+}
+.auth-logo{font-family:'Cinzel',serif;font-weight:900;font-size:1.4rem;
+  background:linear-gradient(135deg,#FFD700,#FFA500);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-align:center;margin-bottom:0.25rem;letter-spacing:3px;}
+.auth-sub{text-align:center;color:var(--muted);font-size:0.75rem;margin-bottom:1.75rem;letter-spacing:1px}
+.form-group{margin-bottom:0.9rem}
+.form-label{font-size:0.68rem;letter-spacing:1.5px;color:var(--muted);display:block;margin-bottom:0.35rem;text-transform:uppercase}
+.form-input{
+  width:100%;background:rgba(0,0,0,0.45);border:1px solid var(--border);
+  color:var(--text);padding:0.6rem 0.9rem;border-radius:3px;
+  font-family:'Rajdhani',sans-serif;font-size:0.92rem;outline:none;
   transition:border-color 0.2s;
 }
-.manual-row input:focus,.manual-row select:focus{border-color:rgba(255,215,0,0.4)}
-.manual-row select{background:rgba(12,12,16,0.98)}
-.manual-row button{
-  background:linear-gradient(135deg,var(--gold3),var(--gold));color:#000;
-  font-weight:700;font-size:0.8rem;letter-spacing:1px;padding:11px 20px;
-  border:none;border-radius:8px;cursor:pointer;white-space:nowrap;transition:var(--transition);
+.form-input:focus{border-color:var(--gold)}
+.err-msg{color:#f87171;font-size:0.72rem;margin-top:-0.5rem;margin-bottom:0.5rem;display:none}
+.err-msg.show{display:block}
+.auth-footer{text-align:center;margin-top:1rem;font-size:0.75rem;color:var(--muted)}
+.auth-footer a{color:var(--gold);cursor:pointer}
+.forgot{float:right;font-size:0.68rem;color:var(--muted);cursor:pointer;transition:color 0.2s}
+.forgot:hover{color:var(--gold)}
+
+/* ═══════════════════════════════ PROFILE ═══════════════════════════════ */
+.profile-wrap{max-width:520px;margin:0 auto;padding:2.5rem 1.5rem}
+.profile-card{
+  background:var(--dark3);border:1px solid var(--border);
+  border-radius:8px;padding:2rem;
 }
-.manual-row button:hover{box-shadow:0 4px 16px rgba(255,215,0,0.3)}
-#manualResult{margin-top:10px;font-size:0.85rem;min-height:22px}
-
-/* ── BUY MODAL ── */
-.buy-modal{display:none;position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,0.88);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px}
-.buy-modal.show{display:flex}
-.buy-box{background:var(--dark2);border:1px solid rgba(255,215,0,0.2);border-radius:16px;padding:40px 36px;max-width:500px;width:100%;position:relative}
-.buy-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:var(--text2);width:34px;height:34px;border-radius:7px;font-size:1rem;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center}
-.buy-close:hover{color:var(--text);background:rgba(255,255,255,0.1)}
-.buy-title{font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:var(--gold);margin-bottom:4px}
-.buy-price{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:#fff;margin-bottom:28px;line-height:1}
-.buy-note{color:var(--text3);font-size:0.75rem;text-align:center;margin-top:16px}
-#paytrWrap{margin-top:20px}
-
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:28px;right:28px;z-index:9999;
-  background:rgba(14,14,18,0.95);border:1px solid rgba(255,215,0,0.25);
-  border-radius:10px;padding:14px 22px;color:var(--text);font-size:0.9rem;font-weight:500;
-  transform:translateY(90px) scale(0.95);opacity:0;
-  transition:all 0.38s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;max-width:340px;
+.profile-av-lg{
+  width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(135deg,#FFD700,#FFA500);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;font-weight:900;color:#080706;
+  margin:0 auto 1rem;border:2px solid rgba(255,215,0,0.3);
 }
-.toast.show{transform:translateY(0) scale(1);opacity:1}
+.profile-name{font-family:'Cinzel',serif;font-size:1.2rem;font-weight:700;color:var(--gold);text-align:center;margin-bottom:0.2rem}
+.profile-role{text-align:center;font-size:0.65rem;color:var(--muted);letter-spacing:2px;margin-bottom:1.5rem}
+.pf{display:flex;justify-content:space-between;align-items:center;padding:0.65rem 0;border-bottom:1px solid rgba(255,215,0,0.05);font-size:0.85rem}
+.pf:last-of-type{border-bottom:none}
+.pf-k{color:var(--muted)}
+.pf-v{color:var(--text);font-weight:600}
+.rank-badge{display:inline-block;padding:0.18rem 0.6rem;border-radius:2px;font-size:0.68rem;font-weight:700;letter-spacing:0.5px}
+.rb-uye{background:rgba(255,255,255,0.07);color:#888}
+.rb-vip{background:rgba(255,215,0,0.12);color:#FFD700;border:1px solid rgba(255,215,0,0.2)}
+.rb-kvip{background:rgba(96,165,250,0.12);color:#60a5fa;border:1px solid rgba(96,165,250,0.2)}
+.rb-gvip{background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.2)}
 
-/* ── FOOTER ── */
-footer{
-  background:var(--dark2);border-top:1px solid var(--border);
-  padding:56px 40px 40px;text-align:center;position:relative;z-index:2;
+/* ORDERS TABLE (profile) */
+.orders-mini{margin-top:1.5rem}
+.orders-mini-title{font-size:0.68rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:0.75rem}
+.order-row{
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(0,0,0,0.2);border:1px solid rgba(255,215,0,0.05);
+  border-radius:3px;padding:0.5rem 0.75rem;margin-bottom:0.4rem;
+  font-size:0.78rem;
 }
-.footer-logo{font-family:'Cinzel Decorative',serif;font-size:1.8rem;background:linear-gradient(135deg,var(--gold3),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;display:block}
-.footer-tagline{color:var(--text3);font-size:0.85rem;margin-bottom:24px}
-.footer-ip{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:1rem;letter-spacing:3px}
-.footer-copy{margin-top:28px;color:#333344;font-size:0.78rem;border-top:1px solid rgba(255,255,255,0.04);padding-top:28px}
+.order-pkg{color:var(--text);font-weight:600}
+.order-date{color:var(--muted);font-size:0.7rem}
+.sp{display:inline-block;padding:0.15rem 0.5rem;border-radius:2px;font-size:0.62rem;font-weight:700}
+.sp-bek{background:rgba(251,191,36,0.12);color:#fbbf24}
+.sp-on{background:rgba(74,222,128,0.12);color:#4ade80}
+.sp-red{background:rgba(248,113,113,0.1);color:#f87171}
+.sp-pay{background:rgba(96,165,250,0.12);color:#60a5fa}
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.in{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:0.1s}
-.reveal-delay-2{transition-delay:0.2s}
-.reveal-delay-3{transition-delay:0.3s}
+/* ═══════════════════════════════ ADMIN ═══════════════════════════════ */
+.admin-wrap{max-width:1050px;margin:0 auto;padding:2rem 1.5rem}
+.admin-head{
+  display:flex;align-items:center;gap:1rem;
+  margin-bottom:2rem;padding-bottom:1.25rem;
+  border-bottom:1px solid var(--border);
+}
+.admin-icon-wrap{
+  width:46px;height:46px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+}
+.ai-admin{background:rgba(91,33,182,0.15);border:1px solid rgba(91,33,182,0.3)}
+.ai-mod{background:rgba(6,95,70,0.15);border:1px solid rgba(6,95,70,0.3)}
+.admin-title{font-family:'Cinzel',serif;font-size:1.15rem;font-weight:700;color:var(--gold)}
+.admin-sub{font-size:0.72rem;color:var(--muted)}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0.75rem;margin-bottom:2rem}
+.ast{background:rgba(255,215,0,0.03);border:1px solid var(--border);border-radius:5px;padding:1rem;text-align:center}
+.ast-v{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:900;color:var(--gold)}
+.ast-l{font-size:0.58rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:0.15rem}
+.sec-label{font-size:0.65rem;font-weight:700;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:0.85rem}
+.tbl{width:100%;border-collapse:collapse;font-size:0.8rem}
+.tbl th{text-align:left;padding:0.5rem 0.75rem;color:var(--muted);font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);font-weight:600}
+.tbl td{padding:0.6rem 0.75rem;border-bottom:1px solid rgba(255,255,255,0.025);color:var(--text);vertical-align:middle}
+.tbl tr:hover td{background:rgba(255,215,0,0.02)}
+.tbl-empty{text-align:center;color:var(--muted);padding:2.5rem;font-size:0.82rem}
+.act{display:flex;gap:0.35rem;flex-wrap:wrap;align-items:center}
+.ab{padding:0.22rem 0.55rem;border-radius:2px;font-size:0.64rem;font-weight:700;cursor:pointer;border:none;font-family:'Rajdhani',sans-serif;letter-spacing:0.5px;transition:all 0.15s}
+.ab:hover{opacity:0.75;transform:scale(0.97)}
+.ab-ok{background:rgba(74,222,128,0.12);color:#4ade80;border:1px solid rgba(74,222,128,0.2)}
+.ab-no{background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.18)}
+.ab-pay{background:rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.18)}
+.ab-rank{background:rgba(255,215,0,0.08);color:var(--gold);border:1px solid var(--border)}
+.sel{background:rgba(0,0,0,0.5);border:1px solid var(--border);color:var(--text);padding:0.22rem 0.5rem;border-radius:2px;font-size:0.7rem;font-family:'Rajdhani',sans-serif;cursor:pointer;outline:none}
+.sel option{background:var(--dark)}
+.user-row-admin{
+  display:flex;align-items:center;gap:0.75rem;
+  background:rgba(255,255,255,0.015);border:1px solid rgba(255,215,0,0.06);
+  border-radius:5px;padding:0.65rem 0.9rem;margin-bottom:0.5rem;
+}
+.uav{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:900;color:#080706;flex-shrink:0}
+.u-info{flex:1}
+.u-name{font-weight:700;font-size:0.85rem;color:var(--text)}
+.u-meta{font-size:0.68rem;color:var(--muted)}
+.admin-tabs{display:flex;gap:0;margin-bottom:2rem;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.admin-tab{flex:1;padding:0.55rem;border:none;background:transparent;color:var(--muted);font-weight:700;font-size:0.72rem;cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:1px;transition:all 0.2s}
+.admin-tab.active{background:rgba(255,215,0,0.1);color:var(--gold)}
 
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  nav{padding:0 20px}
+/* ═══════════════════════════════ MODALS ═══════════════════════════════ */
+.modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(6px)}
+.modal-wrap.open{display:flex}
+.modal{background:var(--dark3);border:1px solid var(--border2);border-radius:8px;padding:1.75rem;width:100%;max-width:420px;max-height:92vh;overflow-y:auto;position:relative}
+.modal-x{position:absolute;top:0.85rem;right:0.9rem;background:none;border:none;color:var(--muted);font-size:1rem;cursor:pointer;line-height:1}
+.modal-x:hover{color:var(--text)}
+.modal-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:1.25rem;letter-spacing:1px}
+.pay-tabs{display:flex;gap:0;margin-bottom:1.25rem;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.pay-tab{flex:1;padding:0.5rem;border:none;background:transparent;color:var(--muted);font-weight:700;font-size:0.72rem;cursor:pointer;font-family:'Rajdhani',sans-serif;transition:all 0.2s;letter-spacing:1px}
+.pay-tab.active{background:rgba(255,215,0,0.1);color:var(--gold)}
+.modal-total{background:rgba(255,215,0,0.04);border:1px solid var(--border);border-radius:3px;padding:0.65rem 0.9rem;display:flex;justify-content:space-between;align-items:center;margin:0.85rem 0}
+.modal-total-v{font-family:'Cinzel',serif;font-weight:700;color:var(--gold);font-size:1.05rem}
+.pay-note{font-size:0.68rem;color:var(--muted);text-align:center;margin-top:0.65rem;line-height:1.5}
+
+/* BANK INFO BOX */
+.bank-box{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:5px;padding:1rem;margin-top:0.75rem}
+.bank-row{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid rgba(255,215,0,0.05);font-size:0.82rem}
+.bank-row:last-child{border-bottom:none}
+.bank-k{color:var(--muted);font-size:0.72rem}
+.bank-v{color:var(--text);font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:0.5px}
+.copy-btn{background:rgba(255,215,0,0.08);border:1px solid var(--border);color:var(--gold);padding:0.15rem 0.5rem;border-radius:2px;font-size:0.6rem;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;transition:all 0.2s}
+.copy-btn:hover{background:rgba(255,215,0,0.18)}
+.paytr-coming{text-align:center;padding:1.5rem;color:var(--muted);font-size:0.82rem;line-height:1.6}
+.paytr-coming strong{color:var(--gold);display:block;margin-bottom:0.5rem;font-family:'Cinzel',serif}
+
+/* ═══════════════════════════════ FOOTER ═══════════════════════════════ */
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--muted);font-size:0.75rem;margin-top:auto}
+.foot-logo{font-family:'Cinzel',serif;font-weight:900;font-size:1.1rem;background:linear-gradient(135deg,#FFD700,#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.4rem;letter-spacing:3px}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark4);border:1px solid var(--border2);color:var(--gold);padding:0.6rem 1.4rem;border-radius:4px;font-weight:700;font-size:0.78rem;letter-spacing:1px;z-index:9999;transition:transform 0.3s;white-space:nowrap;max-width:90vw;text-align:center;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.ok{border-color:rgba(74,222,128,0.35);color:#4ade80}
+.toast.err{border-color:rgba(248,113,113,0.35);color:#f87171}
+.toast.inf{border-color:rgba(96,165,250,0.35);color:#60a5fa}
+
+@media(max-width:640px){
+  nav{padding:0.75rem 1rem}
   .nav-links{display:none}
-  .nav-hamburger{display:flex;align-items:center}
-  .stats-row{grid-template-columns:1fr 1fr}
-}
-@media(max-width:600px){
-  .hero-server-card{flex-direction:column;gap:8px;padding:16px 20px}
-  .glass-box,.buy-box{padding:28px 20px}
-  .admin-box{padding:28px 18px}
-  .hero-cta{flex-direction:column;align-items:center}
-  .stats-row{grid-template-columns:1fr}
-  .tabs-row{gap:4px}
+  .hero{padding:3rem 1rem 2.5rem}
+  .status-bar{flex-direction:column;gap:0}
+  .stat{border-right:none;border-bottom:1px solid var(--border)}
+  .stat:last-child{border-bottom:none}
+  .steps{flex-direction:column;align-items:center}
+  .step:not(:last-child)::after{display:none}
 }
 </style>
 </head>
 <body>
+<div class="app" id="app">
 
-<!-- Particles Canvas -->
-<canvas id="canvas"></canvas>
-
-<!-- NAV -->
-<nav id="mainNav">
-  <a href="#anasayfa" class="nav-logo">GoldenMC</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#anasayfa" class="active">Ana Sayfa</a></li>
-    <li><a href="#hesap">Hesabım</a></li>
-    <li><a href="#vip">VIP</a></li>
-    <li><a href="#basvuru">Başvuru</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="ip-badge" onclick="copyIP()">▶ goldenmcee.falixsvr.me</button>
-    <button class="nav-hamburger" onclick="toggleMobile()" id="hamburger">☰</button>
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">⚔ GOLDENMCEE</div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="showPage('home')">Ana Sayfa</button>
+    <button class="nav-link" onclick="showPage('market')">Market</button>
+    <button class="nav-link" onclick="showPage('features')">Özellikler</button>
+    <button class="nav-link" onclick="showPage('join')">Katıl</button>
+  </div>
+  <div class="nav-right" id="navRight">
+    <button class="btn btn-sm btn-outline" onclick="showPage('login')">Giriş</button>
+    <button class="btn btn-sm btn-gold" onclick="showPage('register')">Kayıt</button>
   </div>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#anasayfa" onclick="closeMobile()">Ana Sayfa</a>
-  <a href="#hesap" onclick="closeMobile()">Hesabım</a>
-  <a href="#vip" onclick="closeMobile()">VIP Paketler</a>
-  <a href="#basvuru" onclick="closeMobile()">Başvuru</a>
+
+<!-- ═══════════════════ HOME ═══════════════════ -->
+<div class="page active" id="page-home">
+  <header class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-tag">⚡ Survival · Economy · PvP · Minigames · 1.21.4</div>
+    <h1>GOLDENMCEE</h1>
+    <p class="hero-sub">Türk Minecraft Sunucusu</p>
+    <div class="hero-ip" onclick="copyIP()">
+      <span class="ip-text">goldenmcee.falixsvr.me</span>
+      <span class="ip-copy">▤ KOPYALA</span>
+    </div>
+    <div class="hero-btns">
+      <button class="btn btn-lg btn-gold" onclick="showPage('market')">🏆 VIP Satın Al</button>
+      <button class="btn btn-lg btn-outline" onclick="showPage('join')">Nasıl Katılırım?</button>
+    </div>
+  </header>
+
+  <div style="max-width:900px;margin:0 auto;padding:0 1.5rem 2rem">
+    <div class="status-bar">
+      <div class="stat"><span class="stat-v"><span class="dot"></span>Aktif</span><span class="stat-l">Sunucu</span></div>
+      <div class="stat"><span class="stat-v" id="hp1">—</span><span class="stat-l">Oyuncu</span></div>
+      <div class="stat"><span class="stat-v">Java</span><span class="stat-l">Tür</span></div>
+      <div class="stat"><span class="stat-v">1.21.4</span><span class="stat-l">Sürüm</span></div>
+      <div class="stat"><span class="stat-v">7/24</span><span class="stat-l">Uptime</span></div>
+    </div>
+  </div>
+
+  <div class="sec" style="padding-top:0.5rem">
+    <h2 class="sec-title">VIP Paketler</h2>
+    <div class="divider"></div>
+    <div class="vip-grid">
+      <div class="vc" onclick="openBuy('VIP',60)"><span class="vc-tag tag-gold">Başlangıç</span><div class="vc-name">VIP</div><div class="vc-price">60<span> ₺</span></div><ul class="vc-perks"><li>/fly komutu</li><li>Özel önek</li><li>3 ev seti</li></ul><button class="vc-buy">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('VIP+',80)"><span class="vc-tag tag-gold">Popüler</span><div class="vc-name">VIP+</div><div class="vc-price">80<span> ₺</span></div><ul class="vc-perks"><li>/fly + /speed</li><li>Renkli sohbet</li><li>5 ev seti</li></ul><button class="vc-buy">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('KVIP',100)"><span class="vc-tag tag-blue">Önerilen</span><div class="vc-name blue">KVIP</div><div class="vc-price">100<span> ₺</span></div><ul class="vc-perks"><li>Particle efekti</li><li>/god modu</li><li>8 ev seti</li></ul><button class="vc-buy blue">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('KVIP+',120)"><span class="vc-tag tag-blue">Premium</span><div class="vc-name blue">KVIP+</div><div class="vc-price">120<span> ₺</span></div><ul class="vc-perks"><li>/invsee</li><li>Özel mesaj</li><li>10 ev seti</li></ul><button class="vc-buy blue">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('GoldenVIP',160)"><span class="vc-tag tag-amber">Elite</span><div class="vc-name">GoldenVIP</div><div class="vc-price">160<span> ₺</span></div><ul class="vc-perks"><li>Altın efektler</li><li>Tüm komutlar</li><li>15 ev seti</li></ul><button class="vc-buy">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('GoldenVIP+',200)" style="border-color:rgba(255,215,0,0.3)"><span class="vc-tag tag-best">⭐ En İyi</span><div class="vc-name">GoldenVIP+</div><div class="vc-price">200<span> ₺</span></div><ul class="vc-perks"><li>Giriş animasyon</li><li>Sınırsız XP</li><li>Sınırsız ev</li></ul><button class="vc-buy">Satın Al</button></div>
+    </div>
+  </div>
 </div>
 
-<!-- HERO -->
-<section id="anasayfa" class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">⚔ Türkiye'nin En Elite Sunucusu ⚔</div>
-    <h1 class="hero-title">GoldenMC</h1>
-    <p class="hero-subtitle">Premium Minecraft Experience</p>
-    <p class="hero-desc">Eşsiz oyun deneyimi, güçlü topluluk ve <strong>sürekli gelişen içerik</strong> seni bekliyor. Falix altyapısında, kesintisiz, premium sunucu.</p>
-    <div class="hero-cta">
-      <a href="#vip" class="btn-gold">🏆 VIP Satın Al</a>
-      <a href="#basvuru" class="btn-outline">📋 Ekibe Katıl</a>
+<!-- ═══════════════════ MARKET ═══════════════════ -->
+<div class="page" id="page-market">
+  <div class="sec">
+    <h2 class="sec-title">VIP Market</h2>
+    <p class="sec-sub">Rütbeni seç, avantajlarını kazan</p>
+    <div class="divider"></div>
+    <div class="vip-grid">
+      <div class="vc" onclick="openBuy('VIP',60)"><span class="vc-tag tag-gold">Başlangıç</span><div class="vc-name">VIP</div><div class="vc-price">60<span> ₺</span></div><ul class="vc-perks"><li>/fly komutu</li><li>Özel VIP öneki</li><li>Renkli sohbet</li><li>2x XP kasası</li><li>3 ev seti</li></ul><button class="vc-buy">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('VIP+',80)"><span class="vc-tag tag-gold">Popüler</span><div class="vc-name">VIP+</div><div class="vc-price">80<span> ₺</span></div><ul class="vc-perks"><li>/fly + /speed</li><li>Formatlanmış sohbet</li><li>3x XP kasası</li><li>5 ev seti</li><li>Özel tab rengi</li></ul><button class="vc-buy">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('KVIP',100)"><span class="vc-tag tag-blue">Önerilen</span><div class="vc-name blue">KVIP</div><div class="vc-price">100<span> ₺</span></div><ul class="vc-perks"><li>Kral VIP öneki</li><li>Particle efekti</li><li>5x XP kasası</li><li>/god modu</li><li>8 ev seti</li></ul><button class="vc-buy blue">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('KVIP+',120)"><span class="vc-tag tag-blue">Premium</span><div class="vc-name blue">KVIP+</div><div class="vc-price">120<span> ₺</span></div><ul class="vc-perks"><li>KVIP+ öneki</li><li>Özel join mesajı</li><li>7x XP kasası</li><li>/invsee komutu</li><li>10 ev seti</li></ul><button class="vc-buy blue">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('GoldenVIP',160)"><span class="vc-tag tag-amber">Elite</span><div class="vc-name">GoldenVIP</div><div class="vc-price">160<span> ₺</span></div><ul class="vc-perks"><li>Altın parlayan önek</li><li>Özel ölüm efekti</li><li>10x XP kasası</li><li>Tüm komutlar</li><li>15 ev seti</li></ul><button class="vc-buy">Satın Al</button></div>
+      <div class="vc" onclick="openBuy('GoldenVIP+',200)" style="border-color:rgba(255,215,0,0.3)"><span class="vc-tag tag-best">⭐ En İyi</span><div class="vc-name">GoldenVIP+</div><div class="vc-price">200<span> ₺</span></div><ul class="vc-perks"><li>Efsane altın önek</li><li>Özel giriş animasyonu</li><li>Sınırsız XP kasası</li><li>Admin koridoru erişim</li><li>Sınırsız ev seti</li></ul><button class="vc-buy">Satın Al</button></div>
     </div>
-    <div class="hero-server-card">
-      <div class="server-dot"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ FEATURES ═══════════════════ -->
+<div class="page" id="page-features">
+  <div class="sec">
+    <h2 class="sec-title">Sunucu Özellikleri</h2>
+    <p class="sec-sub">GoldenMC'yi özel kılan nedir?</p>
+    <div class="divider"></div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="feat-icon">⚔️</div><div class="feat-title">PvP Arenaları</div><div class="feat-desc">Farklı temalı PvP alanlarında rakiplerinle kozunu paylaş.</div></div>
+      <div class="feat-card"><div class="feat-icon">🏰</div><div class="feat-title">Survival Modu</div><div class="feat-desc">Dengeli survival deneyimi, griefing koruması ile.</div></div>
+      <div class="feat-card"><div class="feat-icon">💰</div><div class="feat-title">Ekonomi Sistemi</div><div class="feat-desc">Kendi işini kur, ticaret yap, zengin ol.</div></div>
+      <div class="feat-card"><div class="feat-icon">🎮</div><div class="feat-title">Minigames</div><div class="feat-desc">BedWars, SkyWars ve daha fazlası her gün aktif.</div></div>
+      <div class="feat-card"><div class="feat-icon">🌍</div><div class="feat-title">Özel Haritalar</div><div class="feat-desc">El yapımı özel tasarım haritalar ve benzersiz dünyalar.</div></div>
+      <div class="feat-card"><div class="feat-icon">👥</div><div class="feat-title">Aktif Topluluk</div><div class="feat-desc">Discord'da her zaman aktif yöneticiler ve oyuncular.</div></div>
+    </div>
+    <div style="margin-top:3rem">
+      <h2 class="sec-title">Sunucu Kuralları</h2>
+      <div class="divider"></div>
+      <div class="rules-grid">
+        <div class="rule"><div class="rule-n">01</div><div><div class="rule-title">Hile Yasaktır</div><div class="rule-desc">Her türlü hile yazılımı kalıcı ban ile sonuçlanır.</div></div></div>
+        <div class="rule"><div class="rule-n">02</div><div><div class="rule-title">Saygılı Ol</div><div class="rule-desc">Hakaret, küfür ve ırkçılık tolere edilmez.</div></div></div>
+        <div class="rule"><div class="rule-n">03</div><div><div class="rule-title">Reklam Yasak</div><div class="rule-desc">Başka sunucu reklamı yapmak kalıcı ban sebebidir.</div></div></div>
+        <div class="rule"><div class="rule-n">04</div><div><div class="rule-title">Spam Yapma</div><div class="rule-desc">Sohbette spam ve flood yapmak yasaktır.</div></div></div>
+        <div class="rule"><div class="rule-n">05</div><div><div class="rule-title">Griefing Yasak</div><div class="rule-desc">Başkasının inşaatını tahrip etmek yasaktır.</div></div></div>
+        <div class="rule"><div class="rule-n">06</div><div><div class="rule-title">Yetkililere Uy</div><div class="rule-desc">Moderatör kararlarına saygı göster, itiraz için Discord.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ JOIN ═══════════════════ -->
+<div class="page" id="page-join">
+  <div class="sec">
+    <h2 class="sec-title">Nasıl Katılırsın?</h2>
+    <p class="sec-sub">4 adımda GoldenMC'de oyna</p>
+    <div class="divider"></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-title">Minecraft Aç</div><div class="step-desc">Java Edition 1.21.4 sürümünü aç.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-title">Sunucu Ekle</div><div class="step-desc">Multiplayer → Add Server seç.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-title">IP Gir</div><div class="step-desc" style="color:var(--gold);font-weight:700;font-size:0.82rem">goldenmcee.falixsvr.me</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-title">Oyna!</div><div class="step-desc">Hoş geldin mesajını al, maceraya başla!</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ LOGIN ═══════════════════ -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">⚔ GOLDENMCEE</div>
+      <div class="auth-sub">Hesabına giriş yap</div>
+      <div class="form-group">
+        <label class="form-label">Kullanıcı Adı</label>
+        <input type="text" class="form-input" id="liUser" placeholder="Kullanıcı adın" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Şifre <span class="forgot" onclick="toast('Şifre sıfırlamak için Discord\'a yaz.','inf')">Şifremi unuttum</span></label>
+        <input type="password" class="form-input" id="liPass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="err-msg" id="liErr">Kullanıcı adı veya şifre hatalı.</div>
+      <button class="btn btn-gold btn-full btn-md" style="margin-top:0.5rem" onclick="doLogin()">Giriş Yap</button>
+      <p class="auth-footer">Hesabın yok mu? <a onclick="showPage('register')">Kayıt ol</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ REGISTER ═══════════════════ -->
+<div class="page" id="page-register">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">⚔ GOLDENMCEE</div>
+      <div class="auth-sub">Yeni hesap oluştur</div>
+      <div class="form-group">
+        <label class="form-label">Kullanıcı Adı</label>
+        <input type="text" class="form-input" id="rgUser" placeholder="Kullanıcı adın">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-posta</label>
+        <input type="email" class="form-input" id="rgEmail" placeholder="email@ornek.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Şifre</label>
+        <input type="password" class="form-input" id="rgPass" placeholder="En az 6 karakter">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Şifre Tekrar</label>
+        <input type="password" class="form-input" id="rgPass2" placeholder="Şifreni tekrarla">
+      </div>
+      <div class="err-msg" id="rgErr"></div>
+      <button class="btn btn-gold btn-full btn-md" style="margin-top:0.5rem" onclick="doRegister()">Kayıt Ol</button>
+      <p class="auth-footer">Hesabın var mı? <a onclick="showPage('login')">Giriş yap</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PROFILE ═══════════════════ -->
+<div class="page" id="page-profile">
+  <div class="profile-wrap">
+    <h2 class="sec-title">Hesabım</h2>
+    <div class="divider"></div>
+    <div class="profile-card">
+      <div class="profile-av-lg" id="prAv">U</div>
+      <div class="profile-name" id="prName">—</div>
+      <div class="profile-role" id="prRole">Üye</div>
+      <div class="pf"><span class="pf-k">Kullanıcı Adı</span><span class="pf-v" id="prUser">—</span></div>
+      <div class="pf"><span class="pf-k">E-posta</span><span class="pf-v" id="prEmail">—</span></div>
+      <div class="pf"><span class="pf-k">Rank</span><span class="pf-v"><span class="rank-badge rb-uye" id="prRankBadge">Üye</span></span></div>
+      <div class="pf"><span class="pf-k">Kayıt Tarihi</span><span class="pf-v" id="prDate">—</span></div>
+      <div class="orders-mini">
+        <div class="orders-mini-title">Siparişlerim</div>
+        <div id="prOrders"><div style="color:var(--muted);font-size:0.78rem">Henüz sipariş yok.</div></div>
+      </div>
+      <button class="btn btn-danger btn-full btn-sm" style="margin-top:1.25rem" onclick="doLogout()">Çıkış Yap</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ ADMIN PANEL ═══════════════════ -->
+<div class="page" id="page-admin">
+  <div class="admin-wrap">
+    <div class="admin-head">
+      <div class="admin-icon-wrap ai-admin">👑</div>
       <div>
-        <div class="server-ip">goldenmcee.falixsvr.me</div>
-        <div class="server-players" id="playerText">⟳ Yükleniyor...</div>
+        <div class="admin-title">Admin Paneli</div>
+        <div class="admin-sub" id="adminWelcome">Yükleniyor...</div>
       </div>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="num" id="statOnline">—</div><div class="lbl">Çevrimiçi</div></div>
-      <div class="hero-stat"><div class="num">7/24</div><div class="lbl">Uptime</div></div>
-      <div class="hero-stat"><div class="num">6</div><div class="lbl">VIP Rank</div></div>
-      <div class="hero-stat"><div class="num">0ms</div><div class="lbl">Gecikme</div></div>
+    <div class="admin-stats">
+      <div class="ast"><div class="ast-v" id="asTot">0</div><div class="ast-l">Toplam Sipariş</div></div>
+      <div class="ast"><div class="ast-v" id="asBek" style="color:#fbbf24">0</div><div class="ast-l">Bekleyen</div></div>
+      <div class="ast"><div class="ast-v" id="asOn" style="color:#4ade80">0</div><div class="ast-l">Onaylanan</div></div>
+      <div class="ast"><div class="ast-v" id="asGel" style="color:#60a5fa">0₺</div><div class="ast-l">Gelir</div></div>
+      <div class="ast"><div class="ast-v" id="asUsr">0</div><div class="ast-l">Kullanıcı</div></div>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="adminTab('orders',this)">📦 Siparişler</button>
+      <button class="admin-tab" onclick="adminTab('users',this)">👥 Kullanıcılar</button>
+    </div>
+    <div id="adminOrders">
+      <div class="sec-label">Siparişler & Ödemeler</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Sipariş</th><th>Kullanıcı</th><th>Paket</th><th>Tutar</th><th>Ödeme</th><th>Durum</th><th>Tarih</th><th>İşlem</th></tr></thead>
+          <tbody id="adminOrdersBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="adminUsers" style="display:none">
+      <div class="sec-label">Kullanıcılar & Rank Ata</div>
+      <div id="adminUsersList"></div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- FEATURES -->
-<section class="features">
-  <div class="sec-head reveal">
-    <div class="sec-tag">✦ Özellikler ✦</div>
-    <h2 class="sec-title">Neden GoldenMC?</h2>
-    <div class="gold-line"></div>
-  </div>
-  <div class="features-grid">
-    <div class="feat-card reveal reveal-delay-1">
-      <span class="feat-icon">⚡</span>
-      <div class="feat-name">Falix Altyapısı</div>
-      <div class="feat-desc">Türkiye lokasyonlu, düşük ping, yüksek performanslı Falix sunucusu üzerinde barındırılan sıfır kesinti deneyimi.</div>
+<!-- ═══════════════════ MOD PANEL ═══════════════════ -->
+<div class="page" id="page-mod">
+  <div class="admin-wrap">
+    <div class="admin-head">
+      <div class="admin-icon-wrap ai-mod">🛡️</div>
+      <div>
+        <div class="admin-title">Moderatör Paneli</div>
+        <div class="admin-sub" id="modWelcome">Yükleniyor...</div>
+      </div>
     </div>
-    <div class="feat-card reveal reveal-delay-2">
-      <span class="feat-icon">🏆</span>
-      <div class="feat-name">6 VIP Kademesi</div>
-      <div class="feat-desc">VIP'ten GoldenVIP+'a kadar 6 farklı rank kademesi. Her rank anında oyuna yansır.</div>
+    <div class="admin-stats">
+      <div class="ast"><div class="ast-v" id="msTot">0</div><div class="ast-l">Toplam</div></div>
+      <div class="ast"><div class="ast-v" id="msBek" style="color:#fbbf24">0</div><div class="ast-l">Bekleyen</div></div>
+      <div class="ast"><div class="ast-v" id="msOn" style="color:#4ade80">0</div><div class="ast-l">Onaylanan</div></div>
     </div>
-    <div class="feat-card reveal reveal-delay-3">
-      <span class="feat-icon">🛡</span>
-      <div class="feat-name">Deneyimli Ekip</div>
-      <div class="feat-desc">Seçilmiş moderatörler, builderlar ve içerik üreticilerinden oluşan profesyonel yönetim ekibi.</div>
-    </div>
-    <div class="feat-card reveal reveal-delay-1">
-      <span class="feat-icon">🌍</span>
-      <div class="feat-name">Aktif Topluluk</div>
-      <div class="feat-desc">Discord, forum ve oyun içi etkinliklerle zengin ve canlı bir topluluk yapısı.</div>
-    </div>
-    <div class="feat-card reveal reveal-delay-2">
-      <span class="feat-icon">💎</span>
-      <div class="feat-name">Özel İçerik</div>
-      <div class="feat-desc">GoldenMC'ye özgü plugin ve modlar, benzersiz oyun modları ve sürekli güncellenen içerik.</div>
-    </div>
-    <div class="feat-card reveal reveal-delay-3">
-      <span class="feat-icon">🔒</span>
-      <div class="feat-name">Güvenli Ödeme</div>
-      <div class="feat-desc">PayTR altyapısıyla güvenli ödeme sistemi. Rank satın alımın saniyeler içinde aktif olur.</div>
+    <div class="sec-label">Siparişler</div>
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th>Sipariş</th><th>Kullanıcı</th><th>Paket</th><th>Tutar</th><th>Ödeme</th><th>Durum</th><th>Tarih</th><th>İşlem</th></tr></thead>
+        <tbody id="modOrdersBody"></tbody>
+      </table>
     </div>
   </div>
-</section>
+</div>
 
-<!-- HESAP -->
-<section id="hesap" class="account">
-  <div class="sec-head reveal">
-    <div class="sec-tag">👤 Hesabım</div>
-    <h2 class="sec-title">Giriş Yap</h2>
-    <p class="sec-desc">Minecraft kullanıcı adınla rankını ve bilgilerini görüntüle</p>
-    <div class="gold-line"></div>
-  </div>
-  <div class="login-container reveal">
-    <div class="glass-box">
-      <div class="glass-box-title">🔑 Hesaba Giriş</div>
-      <div class="glass-box-sub">Oyundaki kullanıcı adın ve şifren ile giriş yapabilirsin</div>
-      <div class="field">
-        <label>Minecraft Kullanıcı Adı</label>
-        <input type="text" id="loginUser" placeholder="ör. umut1313" autocomplete="off">
-      </div>
-      <div class="field">
-        <label>Şifre</label>
-        <input type="password" id="loginPass" placeholder="••••••••">
-      </div>
-      <button class="btn-full" id="loginBtn" onclick="doLogin()">Giriş Yap</button>
-      <div class="form-msg" id="loginMsg"></div>
-      <div class="user-info" id="userInfo"></div>
-    </div>
-  </div>
-</section>
+</div><!-- end .app -->
 
-<!-- VIP -->
-<section id="vip" class="vip">
-  <div class="sec-head reveal">
-    <div class="sec-tag">💎 VIP Paketler</div>
-    <h2 class="sec-title">Premium Ranklar</h2>
-    <p class="sec-desc">Satın al — rank <strong style="color:var(--gold)">anında</strong> oyuna gelir. Falix sunucusunda otomatik işlenir.</p>
-    <div class="gold-line"></div>
-  </div>
-  <div class="vip-grid">
-    <div class="vip-card reveal" style="--c:#a8d8ea">
-      <span class="vip-emoji">💎</span>
-      <div class="vip-name">VIP</div>
-      <div class="vip-price-wrap"><div class="vip-price">60</div><div class="vip-currency">TL / Kalıcı</div></div>
-      <div class="vip-divider"></div>
-      <ul class="vip-perks">
-        <li>Özel [VIP] etiketi</li>
-        <li>5 home noktası</li>
-        <li>Fly komutu (lobby)</li>
-        <li>Renkli nickname</li>
-        <li>Özel partikül efektleri</li>
-      </ul>
-      <button class="btn-buy" onclick="openBuy('VIP',60)">Satın Al →</button>
+<!-- ═══════════════════ BUY MODAL ═══════════════════ -->
+<div class="modal-wrap" id="buyModal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeBuy()">✕</button>
+    <div class="modal-title" id="buyTitle">VIP Satın Al</div>
+    <div class="pay-tabs">
+      <button class="pay-tab active" onclick="setPayTab('havale',this)">🏦 Havale/EFT</button>
+      <button class="pay-tab" onclick="setPayTab('paytr',this)">💳 PayTR</button>
     </div>
-    <div class="vip-card reveal reveal-delay-1" style="--c:#87ceeb">
-      <span class="vip-emoji">💠</span>
-      <div class="vip-name">VIP+</div>
-      <div class="vip-price-wrap"><div class="vip-price">80</div><div class="vip-currency">TL / Kalıcı</div></div>
-      <div class="vip-divider"></div>
-      <ul class="vip-perks">
-        <li>Özel [VIP+] etiketi</li>
-        <li>8 home noktası</li>
-        <li>Fly komutu (oyunda)</li>
-        <li>Animasyonlu nick</li>
-        <li>Özel join mesajı</li>
-        <li>Kit VIP+ (günlük)</li>
-      </ul>
-      <button class="btn-buy" onclick="openBuy('VIP+',80)">Satın Al →</button>
-    </div>
-    <div class="vip-card reveal reveal-delay-2" style="--c:#c084fc">
-      <span class="vip-emoji">👑</span>
-      <div class="vip-name">KVIP</div>
-      <div class="vip-price-wrap"><div class="vip-price">120</div><div class="vip-currency">TL / Kalıcı</div></div>
-      <div class="vip-divider"></div>
-      <ul class="vip-perks">
-        <li>Özel [KVIP] etiketi</li>
-        <li>12 home noktası</li>
-        <li>Tüm VIP+ avantajları</li>
-        <li>Özel PvP efektleri</li>
-        <li>/broadcast komutu</li>
-        <li>Kit KVIP (günlük)</li>
-      </ul>
-      <button class="btn-buy" onclick="openBuy('KVIP',120)">Satın Al →</button>
-    </div>
-    <div class="vip-card reveal hot" style="--c:#a78bfa">
-      <div class="hot-badge">Popüler</div>
-      <span class="vip-emoji">🌟</span>
-      <div class="vip-name">KVIP+</div>
-      <div class="vip-price-wrap"><div class="vip-price">160</div><div class="vip-currency">TL / Kalıcı</div></div>
-      <div class="vip-divider"></div>
-      <ul class="vip-perks">
-        <li>Özel [KVIP+] etiketi</li>
-        <li>15 home noktası</li>
-        <li>Tüm KVIP avantajları</li>
-        <li>Özel ölüm animasyonu</li>
-        <li>Özel arazi boyutu</li>
-        <li>Kit KVIP+ (günlük)</li>
-      </ul>
-      <button class="btn-buy" onclick="openBuy('KVIP+',160)">Satın Al →</button>
-    </div>
-    <div class="vip-card reveal reveal-delay-1" style="--c:#ffd700">
-      <span class="vip-emoji">🥇</span>
-      <div class="vip-name">GoldenVIP</div>
-      <div class="vip-price-wrap"><div class="vip-price">200</div><div class="vip-currency">TL / Kalıcı</div></div>
-      <div class="vip-divider"></div>
-      <ul class="vip-perks">
-        <li>Özel [GoldenVIP] etiketi</li>
-        <li>20 home noktası</li>
-        <li>Tüm KVIP+ avantajları</li>
-        <li>Altın partikül efektleri</li>
-        <li>Nick rengi animasyonu</li>
-        <li>Kit Golden (günlük)</li>
-      </ul>
-      <button class="btn-buy" onclick="openBuy('GoldenVIP',200)">Satın Al →</button>
-    </div>
-    <div class="vip-card reveal reveal-delay-2" style="--c:#ff8c00">
-      <span class="vip-emoji">🔱</span>
-      <div class="vip-name">GoldenVIP+</div>
-      <div class="vip-price-wrap"><div class="vip-price">240</div><div class="vip-currency">TL / Kalıcı</div></div>
-      <div class="vip-divider"></div>
-      <ul class="vip-perks">
-        <li>Özel [GoldenVIP+] etiketi</li>
-        <li>Sınırsız home noktası</li>
-        <li>Tüm GoldenVIP avantajları</li>
-        <li>Ateş & altın partiküller</li>
-        <li>Sunucu duyurusu hakkı</li>
-        <li>Kit GoldenVIP+ (saatlik)</li>
-      </ul>
-      <button class="btn-buy" onclick="openBuy('GoldenVIP+',240)">Satın Al →</button>
-    </div>
-  </div>
-</section>
 
-<!-- BAŞVURU -->
-<section id="basvuru" class="apps">
-  <div class="sec-head reveal">
-    <div class="sec-tag">📋 Başvurular</div>
-    <h2 class="sec-title">Ekibimize Katıl</h2>
-    <p class="sec-desc">GoldenMC ailesinin bir parçası olmak ister misin?</p>
-    <div class="gold-line"></div>
-  </div>
-  <div class="tabs-row reveal">
-    <button class="tab on" onclick="switchTab('mod',this)">🛡 Moderatör</button>
-    <button class="tab" onclick="switchTab('build',this)">🏗 Builder</button>
-    <button class="tab" onclick="switchTab('yt',this)">🎬 YouTuber</button>
-  </div>
-  <div class="app-box">
-    <div class="req-box reveal">
-      <h4>📋 Genel Şartlar</h4>
-      <ul>
-        <li><strong>12 yaşından büyük</strong> olmalısın</li>
-        <li>Sunucuda en az <strong>10 saat</strong> geçirmiş olmalısın</li>
-        <li><strong>Saygılı</strong> ve olgun bir tutumun olmalı</li>
-        <li>Türkçe <strong>akıcı</strong> yazıp okuyabilmelisin</li>
-      </ul>
-    </div>
-    <!-- MODERATÖR -->
-    <div class="tab-content on" id="tab-mod">
-      <div class="glass-box reveal">
-        <div class="glass-box-title" style="margin-bottom:24px">🛡 Moderatör Başvurusu</div>
-        <div class="field"><label>Minecraft Kullanıcı Adı</label><input type="text" id="m-user" placeholder="Kullanıcı adın"></div>
-        <div class="field"><label>Yaşın</label><input type="number" id="m-age" placeholder="Kaç yaşındasın?" min="1" max="99"></div>
-        <div class="field"><label>Neden Moderatör olmak istiyorsun?</label><textarea id="m-why" placeholder="En az 3 cümle yazmanı bekliyoruz..."></textarea></div>
-        <div class="field"><label>Sunucuda kaç saat geçirdin?</label><input type="number" id="m-hours" placeholder="Toplam saat sayısı"></div>
-        <div class="field"><label>Daha önce yöneticilik yaptın mı?</label>
-          <select id="m-exp"><option value="">Seç...</option><option value="evet">Evet, deneyimim var</option><option value="hayir">Hayır, ilk kez</option></select></div>
-        <button class="btn-submit" onclick="submitApp('Moderatör','m')">📨 Başvuruyu Gönder</button>
-        <div class="form-msg" id="m-msg"></div>
+    <!-- HAVALE FORM -->
+    <div id="tabHavale">
+      <div class="form-group">
+        <label class="form-label">Minecraft Kullanıcı Adı</label>
+        <input type="text" class="form-input" id="buyUser" placeholder="OyuncuAdın">
       </div>
-    </div>
-    <!-- BUILDER -->
-    <div class="tab-content" id="tab-build">
-      <div class="glass-box reveal">
-        <div class="glass-box-title" style="margin-bottom:24px">🏗 Builder Başvurusu</div>
-        <div class="field"><label>Minecraft Kullanıcı Adı</label><input type="text" id="b-user" placeholder="Kullanıcı adın"></div>
-        <div class="field"><label>Yaşın</label><input type="number" id="b-age" placeholder="Kaç yaşındasın?" min="1" max="99"></div>
-        <div class="field"><label>Build Stilin</label>
-          <select id="b-style"><option value="">Seç...</option><option>Modern</option><option>Medieval</option><option>Fantasy</option><option>Sci-Fi</option><option>Diğer</option></select></div>
-        <div class="field"><label>Portfolyo Linki</label><input type="text" id="b-port" placeholder="imgur.com / planetminecraft.com vb."></div>
-        <div class="field"><label>Kendini Tanıt</label><textarea id="b-why" placeholder="Builder olarak neler yapabilirsin?"></textarea></div>
-        <button class="btn-submit" onclick="submitApp('Builder','b')">📨 Başvuruyu Gönder</button>
-        <div class="form-msg" id="b-msg"></div>
+      <div class="form-group">
+        <label class="form-label">E-posta</label>
+        <input type="email" class="form-input" id="buyEmail" placeholder="ornek@email.com">
       </div>
-    </div>
-    <!-- YOUTUBER -->
-    <div class="tab-content" id="tab-yt">
-      <div class="glass-box reveal">
-        <div class="glass-box-title" style="margin-bottom:24px">🎬 YouTuber Başvurusu</div>
-        <div class="field"><label>Minecraft Kullanıcı Adı</label><input type="text" id="y-user" placeholder="Kullanıcı adın"></div>
-        <div class="field"><label>YouTube Kanal Linki</label><input type="text" id="y-ch" placeholder="youtube.com/c/KanalAdın"></div>
-        <div class="field"><label>Abone Sayısı</label><input type="number" id="y-subs" placeholder="Toplam abone sayısı"></div>
-        <div class="field"><label>Ortalama Görüntülenme (son 5 video)</label><input type="number" id="y-views" placeholder="Görüntülenme sayısı"></div>
-        <div class="field"><label>İçerik Planın</label><textarea id="y-plan" placeholder="Sunucu için ne tür içerik üreteceksin?"></textarea></div>
-        <button class="btn-submit" onclick="submitApp('YouTuber','y')">📨 Başvuruyu Gönder</button>
-        <div class="form-msg" id="y-msg"></div>
+      <div class="modal-total">
+        <span style="font-size:0.75rem;color:var(--muted)">Ödenecek tutar</span>
+        <span class="modal-total-v" id="buyPriceHv">60 ₺</span>
       </div>
+      <div class="bank-box">
+        <div class="bank-row">
+          <span class="bank-k">Ad Soyad</span>
+          <span class="bank-v">UMUT YILMAZ</span>
+          <button class="copy-btn" onclick="copyText('UMUT YILMAZ')">KOPYALA</button>
+        </div>
+        <div class="bank-row">
+          <span class="bank-k">IBAN</span>
+          <span class="bank-v" style="font-size:0.72rem">TR76 0001 2009 8540 0001 0261 61</span>
+          <button class="copy-btn" onclick="copyText('TR760001200985400001026161')">KOPYALA</button>
+        </div>
+        <div class="bank-row">
+          <span class="bank-k">Banka</span>
+          <span class="bank-v">Ziraat Bankası</span>
+        </div>
+        <div class="bank-row" style="border-bottom:none">
+          <span class="bank-k">Açıklama</span>
+          <span class="bank-v" id="ibanDesc" style="font-size:0.72rem;color:var(--gold)">VIP - KullanıcıAdı</span>
+          <button class="copy-btn" onclick="copyIBANDesc()">KOPYALA</button>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-full btn-md" style="margin-top:1rem" onclick="submitOrder('Havale/EFT')">✓ Sipariş Oluştur</button>
+      <p class="pay-note">Ödeme açıklamasına kullanıcı adınızı ve paket adını yazın. Havale sonrası sipariş oluşturun, yönetici onaylar ve rank atanır.</p>
     </div>
-  </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <span class="footer-logo">GoldenMC</span>
-  <p class="footer-tagline">Türkiye'nin premium Minecraft deneyimi — Falix altyapısında, 7/24 aktif</p>
-  <div class="footer-ip">goldenmcee.falixsvr.me</div>
-  <p class="footer-copy">© 2025 GoldenMC — Tüm hakları saklıdır. Bu site GitHub Pages üzerinde barındırılmaktadır.</p>
-</footer>
+    <!-- PAYTR FORM -->
+    <div id="tabPaytr" style="display:none">
+      <div class="paytr-coming">
+        <strong>💳 PayTR Entegrasyonu</strong>
+        PayTR ticari hesap başvurusu yapıldıktan sonra aktif edilecektir.<br>
+        Şu an için lütfen Havale/EFT yöntemiyle ödeme yapınız.
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- BUY MODAL -->
-<div class="buy-modal" id="buyModal">
-  <div class="buy-box">
-    <button class="buy-close" onclick="closeBuy()">✕</button>
-    <div class="buy-title" id="buyTitle">VIP Satın Al</div>
-    <div class="buy-price" id="buyPriceDisp"></div>
-    <div class="field"><label>Minecraft Kullanıcı Adın</label><input type="text" id="buyUser" placeholder="Rank bu isme gelir"></div>
-    <div class="field"><label>E-posta Adresin</label><input type="email" id="buyEmail" placeholder="ornek@gmail.com"></div>
-    <button class="btn-full" id="payBtn" onclick="startPay()">💳 Ödemeye Geç</button>
-    <div id="paytrWrap"></div>
-    <p class="buy-note">Ödeme onaylandıktan sonra rank otomatik aktif edilir.</p>
-  </div>
-</div>
-
-<!-- ADMIN PANEL -->
-<div class="overlay" id="adminOverlay">
-  <div class="admin-box">
-    <button class="admin-close" onclick="closeAdmin()">✕</button>
-    <div class="admin-title">⚙ Admin Paneli</div>
-    <div class="stats-row">
-      <div class="stat-box"><div class="n" id="aStat1">—</div><div class="l">Aktif Oyuncu</div></div>
-      <div class="stat-box"><div class="n" id="aStat2">0</div><div class="l">Bekleyen Başvuru</div></div>
-      <div class="stat-box"><div class="n" id="aStat3">0</div><div class="l">Onaylanan Başvuru</div></div>
-    </div>
-    <div class="admin-section-title">📋 Başvurular</div>
-    <table>
-      <thead><tr><th>Oyuncu</th><th>Tür</th><th>Yaş</th><th>Durum</th><th>İşlem</th></tr></thead>
-      <tbody id="appTableBody"></tbody>
-    </table>
-    <div class="admin-section-title">🎖 Manuel Rank Ver</div>
-    <div class="manual-row">
-      <input type="text" id="mUser" placeholder="Oyuncu adı">
-      <select id="mRank">
-        <option value="vip">VIP</option>
-        <option value="vipplus">VIP+</option>
-        <option value="kvip">KVIP</option>
-        <option value="kvipplus">KVIP+</option>
-        <option value="goldenvip">GoldenVIP</option>
-        <option value="goldenvipplus">GoldenVIP+</option>
-      </select>
-      <button onclick="giveRank()">✓ Ver</button>
-    </div>
-    <div id="manualResult"></div>
-  </div>
-</div>
-
 <script>
-// ═══════════════════════════════════════════
-//  AYARLAR — GitHub Pages için
-//  Backend gerekmez! API'ler direkt çalışır.
-// ═══════════════════════════════════════════
-const SERVER_IP   = 'goldenmcee.falixsvr.me';  // ← Sunucu IP'n
-const SERVER_PORT = 25565;                // ← Sunucu port (genellikle 25565)
-const ADMIN_U     = 'umut1313';
-const ADMIN_P     = 'Admin2025!';
+// ════════════════════════════════════════
+//  DATA LAYER
+// ════════════════════════════════════════
+const UK='gmc_users', OK='gmc_orders', SK='gmc_session';
 
-// PayTR entegrasyonu için backend URL'i (isteğe bağlı)
-// GitHub Pages backend çalıştıramaz, bu yüzden ödeme sistemi
-// sadece UI gösterir — gerçek ödeme için ayrı bir backend ekleyin
-const BACKEND     = ''; // ← Render/Railway/Heroku URL'i (opsiyonel)
+const PRESET=[
+  {username:'umut1313',password:'umutum13132141',email:'umut1313@goldenmcee.com',rank:'GoldenVIP+',role:'admin',date:'01.01.2025'},
+  {username:'umut1366',password:'Hallah1366',email:'umut1366@goldenmcee.com',rank:'GoldenVIP+',role:'mod',date:'01.01.2025'}
+];
 
-// ── STATE ──
-let currentUser = null;
-let applications = JSON.parse(localStorage.getItem('gmc_apps') || '[]');
-let selectedPkg  = null;
+function getUsers(){
+  let u=[];
+  try{u=JSON.parse(localStorage.getItem(UK)||'[]')}catch{u=[]}
+  for(const p of PRESET){if(!u.find(x=>x.username===p.username))u.push(p)}
+  return u;
+}
+function saveUsers(u){try{localStorage.setItem(UK,JSON.stringify(u))}catch{}}
+function getOrders(){try{return JSON.parse(localStorage.getItem(OK)||'[]')}catch{return[]}}
+function saveOrders(o){try{localStorage.setItem(OK,JSON.stringify(o))}catch{}}
+function getSession(){try{return JSON.parse(localStorage.getItem(SK)||'null')}catch{return null}}
+function setSession(u){try{localStorage.setItem(SK,JSON.stringify(u))}catch{}}
+function clearSession(){try{localStorage.removeItem(SK)}catch{}}
 
-// ════════════════════════
-//  CANVAS PARTİKELLER
-// ════════════════════════
-(function(){
-  const c = document.getElementById('canvas');
-  const ctx = c.getContext('2d');
-  let W, H, particles = [];
+let CU=getSession(); // current user
+let buyRank='', buyPrice=0, payTab='havale';
 
-  function resize(){ W=c.width=window.innerWidth; H=c.height=window.innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
+// ════════════════════════════════════════
+//  ROUTING
+// ════════════════════════════════════════
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  const el=document.getElementById('page-'+p);
+  if(el)el.classList.add('active');
+}
 
-  const colors = ['rgba(255,215,0,', 'rgba(255,165,0,', 'rgba(0,255,136,', 'rgba(77,217,255,'];
-  for(let i = 0; i < 70; i++){
-    particles.push({
-      x: Math.random()*1920, y: Math.random()*1080,
-      vx: (Math.random()-0.5)*0.4, vy: -0.2-Math.random()*0.5,
-      r: 0.5+Math.random()*1.5,
-      color: colors[Math.floor(Math.random()*colors.length)],
-      opacity: 0.2+Math.random()*0.5,
-      life: Math.random()
-    });
+function updateNav(){
+  const nr=document.getElementById('navRight');
+  if(CU){
+    let b='';
+    if(CU.role==='admin')b+=`<span class="badge badge-admin">ADMİN</span>`;
+    if(CU.role==='mod')b+=`<span class="badge badge-mod">MOD</span>`;
+    nr.innerHTML=`<div class="user-pill" onclick="goProfile()"><div class="user-av">${CU.username[0].toUpperCase()}</div><span class="user-pill-name">${CU.username}</span>${b}</div>`;
+  }else{
+    nr.innerHTML=`<button class="btn btn-sm btn-outline" onclick="showPage('login')">Giriş</button><button class="btn btn-sm btn-gold" onclick="showPage('register')">Kayıt</button>`;
   }
+}
 
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    particles.forEach(p => {
-      p.x += p.vx; p.y += p.vy; p.life += 0.003;
-      if(p.y < -10) { p.y = H+10; p.x = Math.random()*W; p.life=0; }
-      const alpha = Math.sin(p.life * Math.PI) * p.opacity;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = p.color + Math.max(0,Math.min(1,alpha)) + ')';
-      ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
+function goProfile(){
+  if(!CU){showPage('login');return}
+  if(CU.role==='admin'){renderAdmin();showPage('admin')}
+  else if(CU.role==='mod'){renderMod();showPage('mod')}
+  else{renderProfile();showPage('profile')}
+}
 
-// ════════════════════════
-//  SCROLL & NAV
-// ════════════════════════
-window.addEventListener('scroll', () => {
-  const nav = document.getElementById('mainNav');
-  nav.classList.toggle('scrolled', window.scrollY > 50);
+// ════════════════════════════════════════
+//  AUTH
+// ════════════════════════════════════════
+function doLogin(){
+  const u=document.getElementById('liUser').value.trim();
+  const p=document.getElementById('liPass').value;
+  const users=getUsers();
+  const found=users.find(x=>x.username===u&&x.password===p);
+  const err=document.getElementById('liErr');
+  if(!found){err.classList.add('show');return}
+  err.classList.remove('show');
+  CU=found;setSession(found);updateNav();
+  toast('Hoş geldin, '+found.username+'! 🎮','ok');
+  if(found.role==='admin'){renderAdmin();showPage('admin')}
+  else if(found.role==='mod'){renderMod();showPage('mod')}
+  else{renderProfile();showPage('profile')}
+}
 
-  // Active link
-  const sections = ['anasayfa','hesap','vip','basvuru'];
-  let cur = sections[0];
-  sections.forEach(id => {
-    const el = document.getElementById(id);
-    if(el && window.scrollY >= el.offsetTop - 100) cur = id;
+function doRegister(){
+  const u=document.getElementById('rgUser').value.trim();
+  const e=document.getElementById('rgEmail').value.trim();
+  const p=document.getElementById('rgPass').value;
+  const p2=document.getElementById('rgPass2').value;
+  const err=document.getElementById('rgErr');
+  if(!u||!e||!p){err.textContent='Tüm alanları doldur.';err.classList.add('show');return}
+  if(p.length<6){err.textContent='Şifre en az 6 karakter olmalı.';err.classList.add('show');return}
+  if(p!==p2){err.textContent='Şifreler eşleşmiyor.';err.classList.add('show');return}
+  const users=getUsers();
+  if(users.find(x=>x.username===u)){err.textContent='Bu kullanıcı adı alınmış.';err.classList.add('show');return}
+  const nu={username:u,password:p,email:e,rank:'Üye',role:'user',date:new Date().toLocaleDateString('tr-TR')};
+  users.push(nu);saveUsers(users);
+  err.classList.remove('show');
+  CU=nu;setSession(nu);updateNav();
+  toast('Hesap oluşturuldu! 🎉','ok');
+  renderProfile();showPage('profile');
+}
+
+function doLogout(){
+  clearSession();CU=null;updateNav();
+  toast('Çıkış yapıldı.','inf');showPage('home');
+}
+
+// ════════════════════════════════════════
+//  PROFILE
+// ════════════════════════════════════════
+function renderProfile(){
+  if(!CU)return;
+  document.getElementById('prAv').textContent=CU.username[0].toUpperCase();
+  document.getElementById('prName').textContent=CU.username;
+  document.getElementById('prUser').textContent=CU.username;
+  document.getElementById('prEmail').textContent=CU.email||'—';
+  document.getElementById('prDate').textContent=CU.date||'—';
+  document.getElementById('prRole').textContent=CU.role==='admin'?'Administrator':CU.role==='mod'?'Moderatör':'Üye';
+  const rank=CU.rank||'Üye';
+  const rb=document.getElementById('prRankBadge');
+  rb.textContent=rank;rb.className='rank-badge '+rankClass(rank);
+  const orders=getOrders().filter(o=>o.username===CU.username);
+  const ob=document.getElementById('prOrders');
+  if(orders.length===0){ob.innerHTML='<div style="color:var(--muted);font-size:0.78rem">Henüz sipariş yok.</div>';return}
+  ob.innerHTML=orders.map(o=>`
+    <div class="order-row">
+      <span class="order-pkg">${o.package}</span>
+      <span class="order-date">${o.date}</span>
+      <span class="sp ${spClass(o.status)}">${o.status}</span>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════
+//  BUY MODAL
+// ════════════════════════════════════════
+function openBuy(rank,price){
+  if(!CU){toast('Satın almak için giriş yap.','err');showPage('login');return}
+  buyRank=rank;buyPrice=price;
+  document.getElementById('buyTitle').textContent=rank+' Satın Al';
+  document.getElementById('buyPriceHv').textContent=price+' ₺';
+  document.getElementById('buyUser').value=CU.username;
+  document.getElementById('buyEmail').value=CU.email||'';
+  document.getElementById('ibanDesc').textContent=rank+' - '+CU.username;
+  document.getElementById('buyModal').classList.add('open');
+}
+function closeBuy(){document.getElementById('buyModal').classList.remove('open')}
+function setPayTab(t,btn){
+  payTab=t;
+  document.querySelectorAll('.pay-tab').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tabHavale').style.display=t==='havale'?'block':'none';
+  document.getElementById('tabPaytr').style.display=t==='paytr'?'block':'none';
+}
+document.getElementById('buyModal').addEventListener('click',e=>{if(e.target.id==='buyModal')closeBuy()});
+
+function submitOrder(method){
+  const u=document.getElementById('buyUser').value.trim();
+  const e=document.getElementById('buyEmail').value.trim();
+  if(!u||!e){toast('Kullanıcı adı ve e-posta gir.','err');return}
+  const orders=getOrders();
+  const oid='GMC-'+Date.now()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+  orders.push({
+    id:oid,username:u,email:e,
+    package:buyRank,price:buyPrice,
+    method:method,status:'Bekliyor',
+    date:new Date().toLocaleString('tr-TR')
   });
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
-  });
-
-  // Reveal
-  document.querySelectorAll('.reveal:not(.in)').forEach(el => {
-    if(el.getBoundingClientRect().top < window.innerHeight - 60) el.classList.add('in');
-  });
-});
-
-// Initial reveal check
-setTimeout(() => {
-  document.querySelectorAll('.reveal').forEach(el => {
-    if(el.getBoundingClientRect().top < window.innerHeight - 60) el.classList.add('in');
-  });
-}, 100);
-
-// ════════════════════════
-//  MOBILE MENU
-// ════════════════════════
-function toggleMobile(){
-  const m = document.getElementById('mobileMenu');
-  m.classList.toggle('open');
-  document.getElementById('hamburger').textContent = m.classList.contains('open') ? '✕' : '☰';
-}
-function closeMobile(){
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.getElementById('hamburger').textContent = '☰';
+  saveOrders(orders);
+  closeBuy();
+  toast('Sipariş oluşturuldu! #'+oid,'ok');
+  if(CU){renderProfile()}
 }
 
-// ════════════════════════
-//  TOAST
-// ════════════════════════
-function toast(msg, dur = 3500){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), dur);
+function copyIBANDesc(){
+  const v=document.getElementById('ibanDesc').textContent;
+  copyText(v);
 }
 
-// ════════════════════════
-//  IP KOPYALA
-// ════════════════════════
-function copyIP(){
-  navigator.clipboard.writeText(SERVER_IP).then(() => toast('✅ ' + SERVER_IP + ' kopyalandı!'));
+// ════════════════════════════════════════
+//  ADMIN PANEL
+// ════════════════════════════════════════
+function adminTab(t,btn){
+  document.querySelectorAll('.admin-tab').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('adminOrders').style.display=t==='orders'?'block':'none';
+  document.getElementById('adminUsers').style.display=t==='users'?'block':'none';
 }
 
-// ════════════════════════
-//  SUNUCU DURUMU — Sabit gösterim
-// ════════════════════════
-document.getElementById('playerText').textContent = '🟢 Sunucu Çevrimiçi';
-document.getElementById('statOnline').textContent = '✓';
+function renderAdmin(){
+  const orders=getOrders(),users=getUsers();
+  document.getElementById('adminWelcome').textContent='Hoş geldin, '+CU.username;
+  document.getElementById('asTot').textContent=orders.length;
+  document.getElementById('asBek').textContent=orders.filter(o=>o.status==='Bekliyor').length;
+  document.getElementById('asOn').textContent=orders.filter(o=>o.status==='Onaylandı').length;
+  document.getElementById('asGel').textContent=orders.filter(o=>o.status==='Onaylandı'||o.status==='Ödeme Başarılı').reduce((a,o)=>a+o.price,0)+'₺';
+  document.getElementById('asUsr').textContent=users.length;
 
-// ════════════════════════
-//  LOGİN
-// ════════════════════════
-function getRankColor(r){
-  const m = {
-    'GoldenVIP+':'#ff8c00','GoldenVIP':'#ffd700',
-    'KVIP+':'#a78bfa','KVIP':'#c084fc',
-    'VIP+':'#87ceeb','VIP':'#a8d8ea',
-    'Admin':'#FFD700','Üye':'#888899'
-  };
-  return m[r] || '#888899';
-}
-
-async function doLogin(){
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value;
-  const msg = document.getElementById('loginMsg');
-  const btn = document.getElementById('loginBtn');
-
-  if(!u || !p){ msg.className='form-msg err'; msg.textContent='⚠ Kullanıcı adı ve şifre gerekli.'; return; }
-
-  // Admin giriş
-  if(u.toLowerCase() === ADMIN_U.toLowerCase() && p === ADMIN_P){
-    currentUser = {name: u, rank: 'Admin', admin: true};
-    showProfile(); return;
-  }
-
-  btn.disabled = true; btn.textContent = '⟳ Kontrol ediliyor...';
-
-  // Minecraft API ile oyuncu doğrulama (UUID kontrolü)
-  try {
-    const r = await fetch(`https://api.ashcon.app/mojang/v2/user/${encodeURIComponent(u)}`);
-    if(r.ok){
-      const d = await r.json();
-      if(d.username){
-        // Oyuncu bulundu, rank'ı localStorage'dan al (demo)
-        const savedRank = localStorage.getItem('rank_' + u.toLowerCase()) || 'Üye';
-        currentUser = {name: d.username, rank: savedRank, admin: false, uuid: d.uuid};
-        showProfile();
-      } else {
-        msg.className='form-msg err'; msg.textContent='❌ Bu kullanıcı adı Minecraft\'ta bulunamadı.';
-      }
-    } else {
-      msg.className='form-msg err'; msg.textContent='❌ Oyuncu bulunamadı veya Mojang API\'si meşgul.';
-    }
-  } catch {
-    msg.className='form-msg err'; msg.textContent='❌ Bağlantı hatası. Lütfen tekrar dene.';
-  }
-
-  btn.disabled = false; btn.textContent = 'Giriş Yap';
-}
-
-function showProfile(){
-  const msg   = document.getElementById('loginMsg');
-  const panel = document.getElementById('userInfo');
-  const c     = getRankColor(currentUser.rank);
-  msg.textContent = '';
-  panel.style.display = 'block';
-  panel.innerHTML = `
-    <p style="color:var(--green);font-size:1.05rem;font-weight:700;margin-bottom:6px">✅ Hoş geldin, <strong>${currentUser.name}</strong>!</p>
-    <p style="color:var(--text3);font-size:0.8rem;margin-bottom:14px">Mevcut rankın:</p>
-    <span class="rank-pill" style="background:${c}18;border:1px solid ${c}44;color:${c}">${currentUser.rank}</span>
-    ${currentUser.admin ? `<br><button class="admin-link" onclick="openAdmin()" style="margin-top:18px;display:inline-flex">⚙ Admin Panelini Aç</button>` : ''}
-  `;
-  toast(`🟢 ${currentUser.name} olarak giriş yapıldı!`);
-}
-
-// ════════════════════════
-//  SATIN AL
-// ════════════════════════
-function openBuy(name, price){
-  selectedPkg = {name, price};
-  document.getElementById('buyTitle').textContent = `🏆 ${name} Paketi`;
-  document.getElementById('buyPriceDisp').textContent = `${price} TL`;
-  document.getElementById('paytrWrap').innerHTML = '';
-  if(currentUser) document.getElementById('buyUser').value = currentUser.name;
-  document.getElementById('buyModal').classList.add('show');
-}
-function closeBuy(){ document.getElementById('buyModal').classList.remove('show'); }
-
-async function startPay(){
-  const user  = document.getElementById('buyUser').value.trim();
-  const email = document.getElementById('buyEmail').value.trim();
-  if(!user || !email){ toast('⚠ Kullanıcı adı ve e-posta gerekli!'); return; }
-  if(!email.includes('@')){ toast('⚠ Geçerli bir e-posta gir.'); return; }
-
-  if(BACKEND){
-    const btn = document.getElementById('payBtn');
-    btn.disabled = true; btn.textContent = '⟳ Hazırlanıyor...';
-    try {
-      const res = await fetch(`${BACKEND}/api/payment/start`, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({username:user, email, packageName:selectedPkg.name, userIp:'127.0.0.1'})
-      });
-      const d = await res.json();
-      if(d.ok && d.token){
-        document.getElementById('paytrWrap').innerHTML =
-          `<iframe src="https://www.paytr.com/odeme/guvenli/${d.token}" style="width:100%;height:500px;border:none;border-radius:8px;background:#fff"></iframe>`;
-      } else { toast('❌ Ödeme başlatılamadı.'); }
-    } catch { toast('❌ Backend bağlantısı kurulamadı!'); }
-    btn.disabled = false; btn.textContent = '💳 Ödemeye Geç';
-  } else {
-    // Backend yoksa iletişim yönlendirmesi
-    document.getElementById('paytrWrap').innerHTML = `
-      <div style="background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:10px;padding:20px;text-align:center;margin-top:8px">
-        <p style="color:var(--gold);font-weight:700;margin-bottom:8px">💳 Ödeme Bilgileri</p>
-        <p style="color:var(--text2);font-size:0.85rem;line-height:1.7">
-          <strong style="color:var(--text)">${selectedPkg.name}</strong> paketi için <strong style="color:var(--gold)">${selectedPkg.price} TL</strong> ödeme işlemi.<br><br>
-          Ödeme yapmak için Discord sunucumuza gel veya yöneticiyle iletişime geç.<br><br>
-          <span style="color:var(--text3);font-size:0.78rem">Kullanıcı adın: <strong style="color:var(--text)">${user}</strong></span>
-        </p>
-      </div>`;
-  }
-}
-
-// ════════════════════════
-//  BAŞVURU
-// ════════════════════════
-function switchTab(id, btn){
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('tab-' + id).classList.add('on');
-}
-
-function submitApp(type, pre){
-  const user = document.getElementById(pre+'-user').value.trim();
-  const age  = parseInt(document.getElementById(pre+'-age')?.value || 18);
-  const msgEl= document.getElementById(pre+'-msg');
-
-  if(!user){ msgEl.className='form-msg err'; msgEl.textContent='⚠ Kullanıcı adı boş olamaz!'; return; }
-  if(age < 12){ msgEl.className='form-msg err'; msgEl.textContent='❌ 12 yaşından küçükler başvuramaz.'; return; }
-
-  const app = {
-    id: Date.now(), player: user, type,
-    age: age || 18, status: 'Bekliyor',
-    date: new Date().toLocaleDateString('tr-TR')
-  };
-  applications.push(app);
-  localStorage.setItem('gmc_apps', JSON.stringify(applications));
-
-  msgEl.className='form-msg ok';
-  msgEl.textContent='✅ Başvurun alındı! En kısa sürede değerlendireceğiz.';
-  setTimeout(() => { msgEl.textContent=''; }, 5000);
-  toast('✅ Başvurun kaydedildi!');
-}
-
-// ════════════════════════
-//  ADMİN PANELİ
-// ════════════════════════
-function openAdmin(){
-  if(!currentUser?.admin) return;
-  renderAppsTable();
-  updateAdminStats();
-  document.getElementById('adminOverlay').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-function closeAdmin(){
-  document.getElementById('adminOverlay').classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-function updateAdminStats(){
-  const waiting  = applications.filter(a => a.status === 'Bekliyor').length;
-  const approved = applications.filter(a => a.status === 'Onaylandı').length;
-  document.getElementById('aStat2').textContent = waiting;
-  document.getElementById('aStat3').textContent = approved;
-  // Player count from last fetch
-  const pt = document.getElementById('playerText').textContent;
-  const m  = pt.match(/(\d+)\s*\//);
-  document.getElementById('aStat1').textContent = m ? m[1] : '—';
-}
-
-function renderAppsTable(){
-  const tbody = document.getElementById('appTableBody');
-  tbody.innerHTML = '';
-  if(!applications.length){
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:24px">Henüz başvuru yok</td></tr>';
-    return;
-  }
-  const statusClasses = {'Bekliyor':'badge-wait','Onaylandı':'badge-ok','Reddedildi':'badge-no'};
-  applications.forEach(app => {
-    const cls = statusClasses[app.status] || 'badge-wait';
-    tbody.insertAdjacentHTML('beforeend', `
+  // Orders
+  const ob=document.getElementById('adminOrdersBody');
+  if(!orders.length){ob.innerHTML=`<tr><td colspan="8" class="tbl-empty">Henüz sipariş yok.</td></tr>`;
+  }else{
+    ob.innerHTML=orders.map((o,i)=>`
       <tr>
-        <td style="color:var(--text);font-weight:600">${app.player}</td>
-        <td>${app.type}</td>
-        <td>${app.age}</td>
-        <td><span class="${cls}">${app.status}</span></td>
-        <td>${app.status === 'Bekliyor'
-          ? `<button class="act-btn act-approve" onclick="appAction(${app.id},'Onaylandı')">✓ Onayla</button>
-             <button class="act-btn act-reject" onclick="appAction(${app.id},'Reddedildi')">✕ Reddet</button>`
-          : '—'}</td>
-      </tr>
-    `);
-  });
-}
-
-function appAction(id, status){
-  const app = applications.find(a => a.id === id);
-  if(!app) return;
-  app.status = status;
-  localStorage.setItem('gmc_apps', JSON.stringify(applications));
-  renderAppsTable();
-  updateAdminStats();
-  toast(`${app.player} → ${status}`);
-}
-
-function giveRank(){
-  const user = document.getElementById('mUser').value.trim();
-  const rank = document.getElementById('mRank').value;
-  const res  = document.getElementById('manualResult');
-  if(!user){ res.style.color='var(--red)'; res.textContent='⚠ Oyuncu adı gir!'; return; }
-
-  // localStorage'a kaydet (demo)
-  const rankNames = {vip:'VIP',vipplus:'VIP+',kvip:'KVIP',kvipplus:'KVIP+',goldenvip:'GoldenVIP',goldenvipplus:'GoldenVIP+'};
-  localStorage.setItem('rank_' + user.toLowerCase(), rankNames[rank]);
-  res.style.color = 'var(--green)';
-  res.textContent = `✅ ${user} → ${rankNames[rank]} rank verildi (kaydedildi)`;
-  toast(`🎖 ${user} artık ${rankNames[rank]}`);
-}
-
-// ════════════════════════
-//  CARD TILT EFFECT
-// ════════════════════════
-document.querySelectorAll('.feat-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    card.style.setProperty('--mx', x + '%');
-    card.style.setProperty('--my', y + '%');
-  });
-});
-
-// ════════════════════════
-//  ESC KEY
-// ════════════════════════
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape'){
-    closeBuy();
-    closeAdmin();
-    closeMobile();
+        <td style="font-size:0.68rem;color:var(--muted)">${o.id}</td>
+        <td style="font-weight:700">${o.username}</td>
+        <td><span style="color:var(--gold);font-size:0.78rem">${o.package}</span></td>
+        <td style="color:var(--gold);font-weight:700">${o.price}₺</td>
+        <td style="font-size:0.72rem;color:var(--muted)">${o.method||'—'}</td>
+        <td><span class="sp ${spClass(o.status)}">${o.status}</span></td>
+        <td style="font-size:0.68rem;color:var(--muted)">${o.date}</td>
+        <td>
+          <div class="act">
+            <button class="ab ab-ok" onclick="orderAction(${i},'Onaylandı')">✓ Onayla</button>
+            <button class="ab ab-no" onclick="orderAction(${i},'Reddedildi')">✕ Reddet</button>
+            <button class="ab ab-pay" onclick="orderAction(${i},'Ödeme Başarılı')">💳 Ödendi</button>
+            <select class="sel" id="rs${i}">
+              <option value="">Rank seç</option>
+              <option>VIP</option><option>VIP+</option>
+              <option>KVIP</option><option>KVIP+</option>
+              <option>GoldenVIP</option><option>GoldenVIP+</option>
+            </select>
+            <button class="ab ab-rank" onclick="giveRankFromOrder(${i})">🏆 Ver</button>
+          </div>
+        </td>
+      </tr>`).join('');
   }
-});
 
-// Overlay tıklaması
-document.getElementById('adminOverlay').addEventListener('click', e => {
-  if(e.target === document.getElementById('adminOverlay')) closeAdmin();
-});
-document.getElementById('buyModal').addEventListener('click', e => {
-  if(e.target === document.getElementById('buyModal')) closeBuy();
-});
+  // Users
+  const ul=document.getElementById('adminUsersList');
+  ul.innerHTML=users.map((u,i)=>`
+    <div class="user-row-admin">
+      <div class="uav">${u.username[0].toUpperCase()}</div>
+      <div class="u-info">
+        <div class="u-name">${u.username}${u.role==='admin'?' <span class="badge badge-admin">ADMİN</span>':u.role==='mod'?' <span class="badge badge-mod">MOD</span>':''}</div>
+        <div class="u-meta">${u.email||''} · ${u.date||'—'}</div>
+      </div>
+      <span class="rank-badge ${rankClass(u.rank||'Üye')}" style="margin-right:0.5rem">${u.rank||'Üye'}</span>
+      <select class="sel" onchange="giveRankToUser(${i},this.value)">
+        <option value="">Rank ata</option>
+        <option>Üye</option><option>VIP</option><option>VIP+</option>
+        <option>KVIP</option><option>KVIP+</option>
+        <option>GoldenVIP</option><option>GoldenVIP+</option>
+      </select>
+    </div>`).join('');
+}
+
+function orderAction(idx,status){
+  const orders=getOrders();
+  if(!orders[idx])return;
+  orders[idx].status=status;
+  saveOrders(orders);
+  toast('Durum: '+status,'ok');
+  renderAdmin();
+}
+
+function giveRankFromOrder(idx){
+  const sel=document.getElementById('rs'+idx);
+  const rank=sel.value;if(!rank){toast('Rank seç.','err');return}
+  const orders=getOrders();
+  const order=orders[idx];if(!order)return;
+  const users=getUsers();
+  const ui=users.findIndex(u=>u.username===order.username);
+  if(ui===-1){toast('Kullanıcı bulunamadı.','err');return}
+  users[ui].rank=rank;saveUsers(users);
+  if(CU&&CU.username===users[ui].username){CU.rank=rank;setSession(CU)}
+  toast(order.username+' → '+rank+' verildi! 🏆','ok');
+  renderAdmin();
+}
+
+function giveRankToUser(idx,rank){
+  if(!rank)return;
+  const users=getUsers();
+  users[idx].rank=rank;saveUsers(users);
+  if(CU&&CU.username===users[idx].username){CU.rank=rank;setSession(CU)}
+  toast(users[idx].username+' → '+rank+' verildi! 🏆','ok');
+  setTimeout(renderAdmin,200);
+}
+
+// ════════════════════════════════════════
+//  MOD PANEL
+// ════════════════════════════════════════
+function renderMod(){
+  const orders=getOrders();
+  document.getElementById('modWelcome').textContent='Hoş geldin, '+CU.username;
+  document.getElementById('msTot').textContent=orders.length;
+  document.getElementById('msBek').textContent=orders.filter(o=>o.status==='Bekliyor').length;
+  document.getElementById('msOn').textContent=orders.filter(o=>o.status==='Onaylandı').length;
+  const ob=document.getElementById('modOrdersBody');
+  if(!orders.length){ob.innerHTML=`<tr><td colspan="8" class="tbl-empty">Henüz sipariş yok.</td></tr>`;return}
+  ob.innerHTML=orders.map((o,i)=>`
+    <tr>
+      <td style="font-size:0.68rem;color:var(--muted)">${o.id}</td>
+      <td style="font-weight:700">${o.username}</td>
+      <td style="color:var(--gold);font-size:0.78rem">${o.package}</td>
+      <td style="color:var(--gold);font-weight:700">${o.price}₺</td>
+      <td style="font-size:0.72rem;color:var(--muted)">${o.method||'—'}</td>
+      <td><span class="sp ${spClass(o.status)}">${o.status}</span></td>
+      <td style="font-size:0.68rem;color:var(--muted)">${o.date}</td>
+      <td>
+        <div class="act">
+          <button class="ab ab-ok" onclick="modAction(${i},'Onaylandı')">✓ Onayla</button>
+          <button class="ab ab-no" onclick="modAction(${i},'Reddedildi')">✕ Reddet</button>
+          <button class="ab ab-pay" onclick="modAction(${i},'Ödeme Başarılı')">💳 Ödendi</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function modAction(idx,status){
+  const orders=getOrders();
+  if(!orders[idx])return;
+  orders[idx].status=status;
+  saveOrders(orders);
+  toast('Durum: '+status,'ok');
+  renderMod();
+}
+
+// ════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════
+function rankClass(r){
+  if(!r||r==='Üye')return 'rb-uye';
+  if(r.includes('Golden'))return 'rb-gvip';
+  if(r.includes('KVIP'))return 'rb-kvip';
+  return 'rb-vip';
+}
+function spClass(s){
+  if(s==='Onaylandı')return 'sp-on';
+  if(s==='Reddedildi')return 'sp-red';
+  if(s==='Ödeme Başarılı')return 'sp-pay';
+  return 'sp-bek';
+}
+
+function copyIP(){
+  navigator.clipboard.writeText('goldenmcee.falixsvr.me')
+    .then(()=>toast('IP kopyalandı! ✓','ok'))
+    .catch(()=>toast('goldenmcee.falixsvr.me','inf'));
+}
+function copyText(t){
+  navigator.clipboard.writeText(t)
+    .then(()=>toast('Kopyalandı! ✓','ok'))
+    .catch(()=>{});
+}
+
+let toastTimer;
+function toast(msg,type){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.className='toast show '+(type||'');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
+}
+
+// ════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════
+updateNav();
+if(CU){
+  if(CU.role==='admin'){renderAdmin();showPage('admin')}
+  else if(CU.role==='mod'){renderMod();showPage('mod')}
+  else{renderProfile()}
+}
 </script>
+
+<footer>
+  <div class="foot-logo">⚔ GOLDENMCEE</div>
+  <p style="margin-bottom:0.3rem">goldenmcee.falixsvr.me · Java 1.21.4</p>
+  <p style="color:rgba(106,90,53,0.6);font-size:0.68rem">© 2025 GoldenMC · Minecraft, Mojang Studios'un ticari markasıdır</p>
+</footer>
+
 </body>
 </html>
