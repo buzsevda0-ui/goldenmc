@@ -372,7 +372,6 @@ nav{
 .admin-tab{flex:1;padding:0.55rem;border:none;background:transparent;color:var(--muted);font-weight:700;font-size:0.72rem;cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:1px;transition:all 0.2s}
 .admin-tab.active{background:rgba(255,215,0,0.1);color:var(--gold)}
 
-/* RCON STATUS */
 .rcon-status{
   display:inline-flex;align-items:center;gap:0.4rem;
   font-size:0.62rem;letter-spacing:1px;color:var(--muted);
@@ -431,7 +430,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
 <body>
 <div class="app" id="app">
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo" onclick="showPage('home')">⚔ GOLDENMCEE</div>
   <div class="nav-links">
@@ -446,7 +444,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </nav>
 
-<!-- HOME -->
 <div class="page active" id="page-home">
   <header class="hero">
     <div class="hero-glow"></div>
@@ -487,7 +484,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- MARKET -->
 <div class="page" id="page-market">
   <div class="sec">
     <h2 class="sec-title">VIP Market</h2>
@@ -504,7 +500,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- FEATURES -->
 <div class="page" id="page-features">
   <div class="sec">
     <h2 class="sec-title">Sunucu Özellikleri</h2>
@@ -533,7 +528,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- JOIN -->
 <div class="page" id="page-join">
   <div class="sec">
     <h2 class="sec-title">Nasıl Katılırsın?</h2>
@@ -548,7 +542,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- LOGIN -->
 <div class="page" id="page-login">
   <div class="auth-wrap">
     <div class="auth-card">
@@ -569,7 +562,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- REGISTER -->
 <div class="page" id="page-register">
   <div class="auth-wrap">
     <div class="auth-card">
@@ -598,7 +590,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- PROFILE -->
 <div class="page" id="page-profile">
   <div class="profile-wrap">
     <h2 class="sec-title">Hesabım</h2>
@@ -620,7 +611,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
 <div class="page" id="page-admin">
   <div class="admin-wrap">
     <div class="admin-head">
@@ -694,7 +684,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- MOD PANEL -->
 <div class="page" id="page-mod">
   <div class="admin-wrap">
     <div class="admin-head">
@@ -719,7 +708,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-</div><!-- end .app -->
+</div>
 
 <!-- BUY MODAL -->
 <div class="modal-wrap" id="buyModal">
@@ -731,7 +720,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
       <button class="pay-tab" onclick="setPayTab('paytr',this)">💳 PayTR</button>
     </div>
 
-    <!-- HAVALE -->
     <div id="tabHavale">
       <div class="form-group">
         <label class="form-label">Minecraft Kullanıcı Adı</label>
@@ -758,7 +746,7 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
         </div>
         <div class="bank-row">
           <span class="bank-k">Banka</span>
-          <span class="bank-v">Ziraat Bankası</span>
+          <span class="bank-v">Halkbank</span>
         </div>
         <div class="bank-row" style="border-bottom:none">
           <span class="bank-k">Açıklama</span>
@@ -770,7 +758,6 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
       <p class="pay-note">Ödeme açıklamasına kullanıcı adınızı ve paket adını yazın. Havale sonrası sipariş oluşturun, yönetici onaylar ve rank otomatik atanır.</p>
     </div>
 
-    <!-- PAYTR -->
     <div id="tabPaytr" style="display:none">
       <div class="paytr-coming">
         <strong>💳 PayTR Entegrasyonu</strong>
@@ -781,13 +768,9 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:v
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════
-//  DATA LAYER
-// ════════════════════════════════════════
 const UK='gmc_users', OK='gmc_orders', SK='gmc_session', RK='gmc_rcon';
 
 const PRESET=[
@@ -795,7 +778,6 @@ const PRESET=[
   {username:'umut1366',password:'Hallah1366',email:'umut1366@goldenmcee.com',rank:'GoldenVIP+',role:'mod',date:'01.01.2025'}
 ];
 
-// Default RCON config
 const RCON_DEFAULT={host:'goldenmcee.falixsvr.me',port:25575,password:'goldenmc'};
 
 function getUsers(){
@@ -816,76 +798,39 @@ function saveRconCfgData(d){try{localStorage.setItem(RK,JSON.stringify(d))}catch
 let CU=getSession();
 let buyRank='', buyPrice=0, payTab='havale';
 
-// ════════════════════════════════════════
-//  RCON — Web-based proxy approach
-//  Tarayıcı TCP RCON yapamaz; bu yüzden
-//  mevcut RCON komutlarını kaydedip
-//  "bekleyen RCON komutları" olarak saklarız.
-//  Admin panelinde manuel çalıştırma + log görünür.
-//  Gerçek RCON için sunucu tarafı proxy gerekir.
-// ════════════════════════════════════════
-
 const RCON_Q_KEY='gmc_rcon_queue';
-
 function getRconQueue(){try{return JSON.parse(localStorage.getItem(RCON_Q_KEY)||'[]')}catch{return[]}}
 function saveRconQueue(q){try{localStorage.setItem(RCON_Q_KEY,JSON.stringify(q))}catch{}}
 
-// Rank → LuckPerms command
 function rankToCommand(username, rank){
-  // lp user <player> group set <group>
   const groupMap={
-    'VIP':'vip',
-    'VIP+':'vipplus',
-    'KVIP':'kvip',
-    'KVIP+':'kvipplus',
-    'GoldenVIP':'goldenvip',
-    'GoldenVIP+':'goldenvipplus',
-    'Üye':'default'
+    'VIP':'vip','VIP+':'vipplus','KVIP':'kvip','KVIP+':'kvipplus',
+    'GoldenVIP':'goldenvip','GoldenVIP+':'goldenvipplus','Üye':'default'
   };
   const grp=groupMap[rank]||rank.toLowerCase().replace(/\+/g,'plus').replace(/\s/g,'');
   return `lp user ${username} group set ${grp}`;
 }
 
-// Attempt real RCON via WebSocket proxy (if available)
-// Falls back gracefully — queues command for manual execution
 async function rconSend(command){
   const cfg=getRconCfg();
   rconLog(`> Komut: ${command}`);
-
-  // Try a WebSocket-based RCON proxy if running locally (e.g. node rcon-ws-proxy)
-  // URL: ws://localhost:4567  — only works if user has proxy running
   const wsUrl='ws://localhost:4567';
   return new Promise((resolve)=>{
     let ws;
     try{
       ws=new WebSocket(wsUrl);
-      ws.onopen=()=>{
-        ws.send(JSON.stringify({host:cfg.host,port:cfg.port,password:cfg.password,command}));
-      };
+      ws.onopen=()=>{ws.send(JSON.stringify({host:cfg.host,port:cfg.port,password:cfg.password,command}))};
       ws.onmessage=(e)=>{
-        let d;
-        try{d=JSON.parse(e.data)}catch{d={response:e.data}}
+        let d;try{d=JSON.parse(e.data)}catch{d={response:e.data}}
         rconLog(`< ${d.response||'OK'}`);
-        setRconStatus('ok','RCON Bağlı');
-        ws.close();
-        resolve({ok:true,response:d.response});
+        setRconStatus('ok','RCON Bağlı');ws.close();resolve({ok:true,response:d.response});
       };
-      ws.onerror=()=>{
-        fallbackQueue(command);
-        ws.close();
-        resolve({ok:false});
-      };
-      ws.onclose=(e)=>{
-        if(e.code!==1000&&e.code!==1005)fallbackQueue(command);
-      };
+      ws.onerror=()=>{fallbackQueue(command);ws.close();resolve({ok:false})};
+      ws.onclose=(e)=>{if(e.code!==1000&&e.code!==1005)fallbackQueue(command)};
       setTimeout(()=>{
-        if(ws.readyState!==WebSocket.OPEN&&ws.readyState!==WebSocket.CONNECTING){return}
         if(ws.readyState===WebSocket.CONNECTING){ws.close();fallbackQueue(command);resolve({ok:false})}
       },3000);
-    }catch(err){
-      fallbackQueue(command);
-      resolve({ok:false});
-    }
+    }catch(err){fallbackQueue(command);resolve({ok:false})}
   });
 }
 
@@ -919,11 +864,8 @@ async function rconTest(){
   const cfg=getRconCfg();
   rconLog(`\n> Bağlantı testi: ${cfg.host}:${cfg.port}`);
   const res=await rconSend('list');
-  if(res.ok){
-    toast('RCON bağlantısı başarılı! ✓','ok');
-  }else{
-    toast('RCON proxy bulunamadı — komutlar kuyruğa alınacak','inf');
-  }
+  if(res.ok){toast('RCON bağlantısı başarılı! ✓','ok')}
+  else{toast('RCON proxy bulunamadı — komutlar kuyruğa alınacak','inf')}
 }
 
 function saveRconCfg(){
@@ -944,24 +886,17 @@ async function rconSendManual(){
   document.getElementById('rconCmd').value='';
 }
 
-// Auto-give rank via RCON when admin approves
 async function autoRankViaRcon(username, rank){
   const cmd=rankToCommand(username,rank);
   rconLog(`\n> Otonom rank atama: ${username} → ${rank}`);
   rconLog(`> Komut: ${cmd}`);
   setRconStatus('spin','Rank atanıyor...');
   const res=await rconSend(cmd);
-  if(res.ok){
-    toast(`${username} → ${rank} RCON ile atandı! 🏆`,'ok');
-  }else{
-    toast(`${username} için komut kuyruğa alındı: ${cmd}`,'inf');
-  }
+  if(res.ok){toast(`${username} → ${rank} RCON ile atandı! 🏆`,'ok')}
+  else{toast(`${username} için komut kuyruğa alındı: ${cmd}`,'inf')}
   return res;
 }
 
-// ════════════════════════════════════════
-//  ROUTING
-// ════════════════════════════════════════
 function showPage(p){
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   const el=document.getElementById('page-'+p);
@@ -987,9 +922,6 @@ function goProfile(){
   else{renderProfile();showPage('profile')}
 }
 
-// ════════════════════════════════════════
-//  AUTH
-// ════════════════════════════════════════
 function doLogin(){
   const u=document.getElementById('liUser').value.trim();
   const p=document.getElementById('liPass').value;
@@ -1029,9 +961,6 @@ function doLogout(){
   toast('Çıkış yapıldı.','inf');showPage('home');
 }
 
-// ════════════════════════════════════════
-//  PROFILE
-// ════════════════════════════════════════
 function renderProfile(){
   if(!CU)return;
   document.getElementById('prAv').textContent=CU.username[0].toUpperCase();
@@ -1054,9 +983,6 @@ function renderProfile(){
     </div>`).join('');
 }
 
-// ════════════════════════════════════════
-//  BUY MODAL
-// ════════════════════════════════════════
 function openBuy(rank,price){
   if(!CU){toast('Satın almak için giriş yap.','err');showPage('login');return}
   buyRank=rank;buyPrice=price;
@@ -1100,9 +1026,6 @@ function copyIBANDesc(){
   copyText(v);
 }
 
-// ════════════════════════════════════════
-//  ADMIN PANEL
-// ════════════════════════════════════════
 function adminTab(t,btn){
   document.querySelectorAll('.admin-tab').forEach(x=>x.classList.remove('active'));
   btn.classList.add('active');
@@ -1114,13 +1037,10 @@ function adminTab(t,btn){
     document.getElementById('rconHost').value=cfg.host;
     document.getElementById('rconPort').value=cfg.port;
     document.getElementById('rconPass').value=cfg.password;
-    // Show pending queue
     const q=getRconQueue();
     if(q.length>0){
       rconLog(`\n> Kuyrukta ${q.length} komut var:`);
-      q.forEach((item,i)=>{
-        rconLog(`  ${i+1}. [${item.ts}] ${item.command}`);
-      });
+      q.forEach((item,i)=>{rconLog(`  ${i+1}. [${item.ts}] ${item.command}`)});
     }
   }
 }
@@ -1187,34 +1107,21 @@ function renderAdmin(){
 function orderAction(idx,status){
   const orders=getOrders();
   if(!orders[idx])return;
-  orders[idx].status=status;
-  saveOrders(orders);
-  toast('Durum: '+status,'ok');
-  renderAdmin();
+  orders[idx].status=status;saveOrders(orders);
+  toast('Durum: '+status,'ok');renderAdmin();
 }
 
-// ⚡ Otonom: Onayla + panelde rank ata + RCON'a gönder
 async function autoApproveAndRank(idx){
   const orders=getOrders();
-  const order=orders[idx];
-  if(!order)return;
-
-  // Status → Onaylandı
-  orders[idx].status='Onaylandı';
-  saveOrders(orders);
-
-  // Panel'de rank ata
+  const order=orders[idx];if(!order)return;
+  orders[idx].status='Onaylandı';saveOrders(orders);
   const users=getUsers();
   const ui=users.findIndex(u=>u.username===order.username);
   if(ui!==-1){
-    users[ui].rank=order.package;
-    saveUsers(users);
+    users[ui].rank=order.package;saveUsers(users);
     if(CU&&CU.username===users[ui].username){CU.rank=order.package;setSession(CU)}
   }
-
-  // RCON'a gönder
   await autoRankViaRcon(order.username, order.package);
-
   renderAdmin();
 }
 
@@ -1241,7 +1148,6 @@ function giveRankToUser(idx,rank){
   setTimeout(renderAdmin,200);
 }
 
-// RCON ile kullanıcıya rank gönder (users tab)
 async function rconRankUser(idx){
   const users=getUsers();
   const u=users[idx];
@@ -1250,9 +1156,6 @@ async function rconRankUser(idx){
   await autoRankViaRcon(u.username,u.rank);
 }
 
-// ════════════════════════════════════════
-//  MOD PANEL
-// ════════════════════════════════════════
 function renderMod(){
   const orders=getOrders();
   document.getElementById('modWelcome').textContent='Hoş geldin, '+CU.username;
@@ -1283,15 +1186,10 @@ function renderMod(){
 function modAction(idx,status){
   const orders=getOrders();
   if(!orders[idx])return;
-  orders[idx].status=status;
-  saveOrders(orders);
-  toast('Durum: '+status,'ok');
-  renderMod();
+  orders[idx].status=status;saveOrders(orders);
+  toast('Durum: '+status,'ok');renderMod();
 }
 
-// ════════════════════════════════════════
-//  HELPERS
-// ════════════════════════════════════════
 function rankClass(r){
   if(!r||r==='Üye')return 'rb-uye';
   if(r.includes('Golden'))return 'rb-gvip';
@@ -1311,9 +1209,7 @@ function copyIP(){
     .catch(()=>toast('goldenmcee.falixsvr.me','inf'));
 }
 function copyText(t){
-  navigator.clipboard.writeText(t)
-    .then(()=>toast('Kopyalandı! ✓','ok'))
-    .catch(()=>{});
+  navigator.clipboard.writeText(t).then(()=>toast('Kopyalandı! ✓','ok')).catch(()=>{});
 }
 
 let toastTimer;
@@ -1324,9 +1220,6 @@ function toast(msg,type){
   toastTimer=setTimeout(()=>el.classList.remove('show'),3500);
 }
 
-// ════════════════════════════════════════
-//  INIT
-// ════════════════════════════════════════
 updateNav();
 if(CU){
   if(CU.role==='admin'){renderAdmin();showPage('admin')}
